@@ -10,10 +10,66 @@ extern "C" {
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
  * Method:    createFile
- * Signature: (Ljava/lang/String;)V
+ * Signature: (Ljava/lang/String;)J
  */
-JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile
-  (JNIEnv *, jobject, jstring);
+JNIEXPORT jlong JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile
+        (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    openFile
+ * Signature: (Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_openFile
+        (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    closeFile
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_closeFile
+        (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write
+ * Signature: (JLjava/lang/String;IZ)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2IZ
+        (JNIEnv *, jclass, jlong, jstring, jint, jboolean);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write
+ * Signature: (JLjava/lang/String;JZ)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JZ
+        (JNIEnv *, jclass, jlong, jstring, jlong, jboolean);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write
+ * Signature: (JLjava/lang/String;FZ)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2FZ
+        (JNIEnv *, jclass, jlong, jstring, jfloat, jboolean);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write
+ * Signature: (JLjava/lang/String;DZ)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2DZ
+        (JNIEnv *, jclass, jlong, jstring, jdouble, jboolean);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write
+ * Signature: (JLjava/lang/String;Ljava/lang/String;Z)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljava_lang_String_2Z
+        (JNIEnv *, jclass, jlong, jstring, jstring, jboolean);
 
 #ifdef __cplusplus
 }
