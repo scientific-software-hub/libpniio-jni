@@ -1,4 +1,4 @@
-package org.bitbucket.ingvord.pnijni;
+package hzg.wpn.nexus.libpniio.jni;
 
 /**
  * @author ingvord
@@ -10,5 +10,5 @@ public class LibpniioJni {
         System.loadLibrary("pniio_jni");
     }
 
-    public native void createFile(String fileName);
+    public native void createFile(String fileName) throws LibpniioException;
 }
