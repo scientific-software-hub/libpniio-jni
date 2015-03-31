@@ -17,8 +17,12 @@ public class NxFile implements Closeable {
         this.ptr = ptr;
     }
 
-    public static NxFile create(String fileName) throws LibpniioException {
-        long ptr = LibpniioJni.createFile(fileName);
+    public String getFileName(){
+        return name;
+    }
+
+    public static NxFile create(String fileName, String nxTemplate) throws LibpniioException {
+        long ptr = LibpniioJni.createFile(fileName, nxTemplate);
         return new NxFile(fileName, ptr);
     }
 

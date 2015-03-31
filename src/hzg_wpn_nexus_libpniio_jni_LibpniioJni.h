@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
  * Method:    createFile
- * Signature: (Ljava/lang/String;)J
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)J
  */
 JNIEXPORT jlong JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile
-        (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni

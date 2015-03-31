@@ -9,7 +9,7 @@ public class LibpniioJni {
         System.loadLibrary("pniio_jni");
     }
 
-    public static native long createFile(String fileName) throws LibpniioException;
+    public static native long createFile(String fileName, String nx_template) throws LibpniioException;
 
     public static native long openFile  (String fileName) throws LibpniioException;
 

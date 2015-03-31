@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <pni/io/nx/nx.hpp>
-
+#include <pni/io/nx/xml.hpp>
 
 struct NxFile {
     pni::io::nx::h5::nxfile file;
@@ -29,12 +29,19 @@ struct NativeString{
 };
 
 
-jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass jClass, jstring jString) {
-
-    NativeString nativeString(env, jString);
-
+jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass jClass, jstring jString, jstring nxTemplate) {
     try {
-        auto file = pni::io::nx::h5::nxfile::create_file(nativeString.value, false);
+        NativeString nativeString(env, jString);
+        NativeString nativeString1(env, nxTemplate);
+
+        pni::io::nx::xml::node xml = pni::io::nx::xml::create_from_file(nativeString1.value);
+        auto file = pni::io::nx::h5::nxfile::create_file(nativeString.value, false, 0);
+        pni::io::nx::h5::nxobject root_group = file.root();
+
+        pni::io::nx::xml::create_objects(root_group, xml.get_child("definition"));
+
+        file.flush();
+
         auto* rv = new NxFile(file);
         return reinterpret_cast<jlong>(rv);
     } catch(const pni::io::exception& pniex){
@@ -44,9 +51,8 @@ jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass
 }
 
 jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_openFile(JNIEnv *env, jclass jClass, jstring jString) {
-    NativeString nativeString(env, jString);
-
     try {
+        NativeString nativeString(env, jString);
         auto file = pni::io::nx::h5::nxfile::open_file(nativeString.value, false);
         auto* rv = new NxFile(file);
         return reinterpret_cast<jlong>(rv);
@@ -72,9 +78,9 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2IZ(J
     typedef pni::io::nx::nxpath nxpath_t;
 
 
-    NativeString nativeString(env, jString);
-
     try {
+        NativeString nativeString(env, jString);
+
         NxFile* nxFile = reinterpret_cast<NxFile*>(jLong);
         auto nx_path = nxpath_t::from_string(nativeString.value);
         auto o = pni::io::nx::get_object(nxFile->file.root(), nx_path);
@@ -111,5 +117,24 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljav
                                                                                                 jstring jstring1,
                                                                                                 jstring jstring2,
                                                                                                 jboolean append) {
+    typedef pni::io::nx::nxpath nxpath_t;
 
+
+    try {
+        NativeString nativeString(env, jstring1);
+        NativeString nativeString2(env, jstring2);
+
+        NxFile* nxFile = reinterpret_cast<NxFile*>(jlong1);
+        auto nx_path = nxpath_t::from_string(nativeString.value);
+        auto o = pni::io::nx::get_object(nxFile->file.root(), nx_path);
+
+        pni::io::nx::write(o,nativeString2.value);
+
+        if(append){
+            pni::io::nx::grow(o,0);
+        }
+    } catch(const pni::io::exception& pniex){
+        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+        env->ThrowNew(libpniioExceptionClass,pniex.description().c_str());
+    }
 }

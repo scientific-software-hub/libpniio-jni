@@ -25,7 +25,7 @@ public class NxFileTest {
     }
 
     @Test
-    public void testWrite() throws Exception {
-        file.write("/entry/title",123,false);
+    public void testWrite_String() throws Exception {
+        file.write("/entry/title","Hello World!!!",false);
     }
 }
