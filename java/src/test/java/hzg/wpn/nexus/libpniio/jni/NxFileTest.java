@@ -2,10 +2,7 @@ package hzg.wpn.nexus.libpniio.jni;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * @author ingvord
@@ -26,6 +23,11 @@ public class NxFileTest {
 
     @Test
     public void testWrite_String() throws Exception {
-        file.write("/entry/title","Hello World!!!",false);
+        file.write("/entry/title","Hello World!!!");
+    }
+
+    @Test
+    public void testWrite_int() throws Exception {
+        file.write("/entry/hardware/pco/camera/x0",12);
     }
 }

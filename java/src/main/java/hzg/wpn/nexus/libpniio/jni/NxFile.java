@@ -31,12 +31,24 @@ public class NxFile implements Closeable {
         return new NxFile(fileName, ptr);
     }
 
-    public void write(String nxPath, int value, boolean append) throws LibpniioException {
-        LibpniioJni.write(ptr, nxPath, value, append);
+    public void write(String nxPath, int value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value);
     }
 
-    public void write(String nxPath, String value, boolean append) throws LibpniioException {
-        LibpniioJni.write(ptr, nxPath, value, append);
+    public void write(String nxPath, long value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value);
+    }
+
+    public void write(String nxPath, float value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value);
+    }
+
+    public void write(String nxPath, double value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value);
+    }
+
+    public void write(String nxPath, String value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value);
     }
 
     @Override

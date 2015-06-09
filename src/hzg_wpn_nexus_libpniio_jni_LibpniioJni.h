@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Ljava/lang/String;Ljava/lang/String;)J
  */
 JNIEXPORT jlong JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile
-        (JNIEnv *, jclass, jstring, jstring);
+  (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
@@ -21,7 +21,7 @@ JNIEXPORT jlong JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile
  * Signature: (Ljava/lang/String;)J
  */
 JNIEXPORT jlong JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_openFile
-        (JNIEnv *, jclass, jstring);
+  (JNIEnv *, jclass, jstring);
 
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
@@ -29,47 +29,87 @@ JNIEXPORT jlong JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_openFile
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_closeFile
-        (JNIEnv *, jclass, jlong);
+  (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
  * Method:    write
- * Signature: (JLjava/lang/String;IZ)V
+ * Signature: (JLjava/lang/String;I)V
  */
-JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2IZ
-        (JNIEnv *, jclass, jlong, jstring, jint, jboolean);
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2I
+  (JNIEnv *, jclass, jlong, jstring, jint);
 
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
  * Method:    write
- * Signature: (JLjava/lang/String;JZ)V
+ * Signature: (JLjava/lang/String;J)V
  */
-JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JZ
-        (JNIEnv *, jclass, jlong, jstring, jlong, jboolean);
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2J
+  (JNIEnv *, jclass, jlong, jstring, jlong);
 
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
  * Method:    write
- * Signature: (JLjava/lang/String;FZ)V
+ * Signature: (JLjava/lang/String;F)V
  */
-JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2FZ
-        (JNIEnv *, jclass, jlong, jstring, jfloat, jboolean);
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2F
+  (JNIEnv *, jclass, jlong, jstring, jfloat);
 
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
  * Method:    write
- * Signature: (JLjava/lang/String;DZ)V
+ * Signature: (JLjava/lang/String;D)V
  */
-JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2DZ
-        (JNIEnv *, jclass, jlong, jstring, jdouble, jboolean);
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2D
+  (JNIEnv *, jclass, jlong, jstring, jdouble);
 
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
  * Method:    write
- * Signature: (JLjava/lang/String;Ljava/lang/String;Z)V
+ * Signature: (JLjava/lang/String;Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljava_lang_String_2Z
-        (JNIEnv *, jclass, jlong, jstring, jstring, jboolean);
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljava_lang_String_2
+  (JNIEnv *, jclass, jlong, jstring, jstring);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write_and_grow
+ * Signature: (JLjava/lang/String;I)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2I
+  (JNIEnv *, jclass, jlong, jstring, jint);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write_and_grow
+ * Signature: (JLjava/lang/String;J)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2J
+  (JNIEnv *, jclass, jlong, jstring, jlong);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write_and_grow
+ * Signature: (JLjava/lang/String;F)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2F
+  (JNIEnv *, jclass, jlong, jstring, jfloat);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write_and_grow
+ * Signature: (JLjava/lang/String;D)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2D
+  (JNIEnv *, jclass, jlong, jstring, jdouble);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write_and_grow
+ * Signature: (JLjava/lang/String;Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2Ljava_lang_String_2
+  (JNIEnv *, jclass, jlong, jstring, jstring);
 
 #ifdef __cplusplus
 }

@@ -1,4 +1,4 @@
-set(JDK_HOME $ENV{JAVA_HOME})
+set(JDK_HOME /usr/lib/jvm/java-7-openjdk-amd64)
 
 if(NOT JDK_HOME)
     message(FATAL_ERROR "Could not find jdk!")

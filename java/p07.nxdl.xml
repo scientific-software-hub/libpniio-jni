@@ -10,11 +10,9 @@
         <field type="string" name="probe"/>
       </group>
       <group type="NXdetector" name="detector">
-        <field type="int32" name="data">
-          <dimensions rank="3">
+        <field type="string" name="data">
+          <dimensions rank="1">
             <dim value="0" index="1"/>
-            <dim value="4096" index="2"/>
-            <dim value="4096" index="3"/>
           </dimensions>
         </field>
         <field type="float32" name="y_pixel_size"/>
@@ -30,29 +28,6 @@
       </group>
       <group type="NXmonitor" name="monitor">
         <field type="float32" name="data">
-          <dimensions rank="1">
-            <dim value="0" index="1"/>
-          </dimensions>
-        </field>
-      </group>
-      <group type="NXsample" name="sample">
-        <field type="float32" name="rotation_angle">
-          <dimensions rank="1">
-            <dim value="0" index="1"/>
-          </dimensions>
-        </field>
-        <field type="float32" name="z_translation">
-          <dimensions rank="1">
-            <dim value="0" index="1"/>
-          </dimensions>
-        </field>
-        <field type="string" name="name"/>
-        <field type="float32" name="x_translation">
-          <dimensions rank="1">
-            <dim value="0" index="1"/>
-          </dimensions>
-        </field>
-        <field type="float32" name="y_translation">
           <dimensions rank="1">
             <dim value="0" index="1"/>
           </dimensions>
@@ -393,6 +368,122 @@
           <field type="uint64" name="time"/>
         </group>
       </group>
+      <group type="NXcollection" name="pco">
+        <group type="NXobject" name="camera">
+          <field type="float32" name="px_size"/>
+          <field type="int32" name="sensor_xsize"/>
+          <field type="int32" name="sensor_ysize"/>
+          <field type="int32" name="binx"/>
+          <field type="int32" name="biny"/>
+          <field type="int32" name="x0"/>
+          <field type="int32" name="y0"/>
+          <field type="int32" name="xsize"/>
+          <field type="int32" name="ysize"/>
+        </group>
+        <group type="NXobject" name="calibration">
+          <field type="float32" name="magnification"/>
+          <field type="string" name="mtf_name"/>
+          <field type="float32" name="resolution"/>
+          <field type="float32" name="energy"/>
+          <field type="float32" name="s_in_pos"/>
+          <field type="float32" name="s_out_dist"/>
+          <field type="float32" name="o_focus"/>
+          <field type="float32" name="o_aperture"/>
+          <field type="float32" name="o_loms_changer"/>
+          <field type="float32" name="o_ccd_high"/>
+          <field type="string" name="screen"/>
+          <field type="uint32" name="exptime"/>
+        </group>
+      </group>
+      <group type="NXcollection" name="fli">
+        <group type="NXobject" name="camera">
+          <field type="float32" name="px_size"/>
+          <field type="int32" name="sensor_xsize"/>
+          <field type="int32" name="sensor_ysize"/>
+          <field type="int32" name="binx"/>
+          <field type="int32" name="biny"/>
+          <field type="int32" name="x0"/>
+          <field type="int32" name="y0"/>
+          <field type="int32" name="xsize"/>
+          <field type="int32" name="ysize"/>
+        </group>
+        <group type="NXobject" name="calibration">
+          <field type="float32" name="magnification"/>
+          <field type="string" name="mtf_name"/>
+          <field type="float32" name="resolution"/>
+          <field type="float32" name="energy"/>
+          <field type="float32" name="s_in_pos"/>
+          <field type="float32" name="s_out_dist"/>
+          <field type="float32" name="o_focus"/>
+          <field type="float32" name="o_aperture"/>
+          <field type="float32" name="o_loms_changer"/>
+          <field type="float32" name="o_ccd_high"/>
+          <field type="string" name="screen"/>
+          <field type="uint32" name="exptime"/>
+        </group>
+      </group>
+    </group>
+    <group type="NXobject" name="scan">
+      <group type="NXcollection" name="data">
+        <group type="NXlog" name="s_rot">
+          <field type="float64" name="value"/>
+          <field type="uint64" name="time"/>
+        </group>
+        <group type="NXlog" name="s_vert">
+          <field type="float64" name="value"/>
+          <field type="uint64" name="time"/>
+        </group>
+        <group type="NXlog" name="image_key">
+          <field type="int32" name="value"/>
+          <field type="uint64" name="time"/>
+        </group>
+        <group type="NXlog" name="image">
+          <field type="string" name="value"/>
+          <field type="uint64" name="time"/>
+        </group>
+      </group>
+      <field type="int32" name="n_dark"/>
+      <field type="int32" name="n_ref"/>
+      <field type="int32" name="n_img"/>
+      <field type="int32" name="n_angle"/>
+      <field type="int32" name="mode"/>
+    </group>
+    <group type="NXobject" name="beamtime">
+      <field type="string" name="name"/>
+      <field type="string" name="application_id"/>
+      <field type="string" name="proposal_id"/>
+      <field type="string" name="principle_investigator"/>
+      <field type="string" name="hzg_support"/>
+      <field type="string" name="start"/>
+    </group>
+    <group type="NXobject" name="beamline">
+      <field type="string" name="name"/>
+      <field type="string" name="experiment"/>
+    </group>
+    <group type="NXsample" name="sample">
+      <field type="string" name="name"/>
+      <field type="string" name="id"/>
+      <field type="string" name="owner"/>
+      <field type="float32" name="rotation_angle">
+        <dimensions rank="1">
+          <dim value="0" index="1"/>
+        </dimensions>
+      </field>
+      <field type="float32" name="z_translation">
+        <dimensions rank="1">
+          <dim value="0" index="1"/>
+        </dimensions>
+      </field>
+      <field type="float32" name="x_translation">
+        <dimensions rank="1">
+          <dim value="0" index="1"/>
+        </dimensions>
+      </field>
+      <field type="float32" name="y_translation">
+        <dimensions rank="1">
+          <dim value="0" index="1"/>
+        </dimensions>
+      </field>
     </group>
   </group>
 </definition>
