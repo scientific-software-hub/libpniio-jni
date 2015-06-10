@@ -10,19 +10,11 @@
         <field type="string" name="probe"/>
       </group>
       <group type="NXdetector" name="detector">
-        <field type="string" name="data">
-          <dimensions rank="1">
-            <dim value="0" index="1"/>
-          </dimensions>
-        </field>
+        <link target="/entry/scan/data/image/value" name="data"/>
+        <link target="/entry/scan/data/image_key/value" name="image_key"/>
         <field type="float32" name="y_pixel_size"/>
         <field type="float32" name="distance"/>
         <field type="float32" name="x_pixel_size"/>
-        <field type="int32" name="image_key">
-          <dimensions rank="1">
-            <dim value="0" index="1"/>
-          </dimensions>
-        </field>
         <field type="float32" name="y_rotation_axis_pixel_position"/>
         <field type="float32" name="x_rotation_axis_pixel_position"/>
       </group>
@@ -438,7 +430,11 @@
           <field type="uint64" name="time"/>
         </group>
         <group type="NXlog" name="image">
-          <field type="string" name="value"/>
+          <field type="uint32" name="value">
+            <dimensions rank="1">
+              <dim index="0" value="262144" />
+            </dimensions>
+          </field>
           <field type="uint64" name="time"/>
         </group>
       </group>

@@ -90,6 +90,20 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljav
     write(env, jClass, jLong, jString, nativeString2.value);
 }
 
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3I(JNIEnv *env, jclass jclass1,
+                                                                                 jlong jlong1, jstring jstring1,
+                                                                                 jlong jlong2, jint size, jintArray array) {
+    uint32_t* data = reinterpret_cast<uint32_t*>(jlong2);
+    write(env, jclass1, jlong1, jstring1, data, size);
+}
+
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3F(JNIEnv *env, jclass jclass1,
+                                                                                 jlong jlong1, jstring jstring1,
+                                                                                 jlong jlong2, jint size, jfloatArray array) {
+    float_t* data = reinterpret_cast<float_t*>(jlong2);
+    write(env, jclass1, jlong1, jstring1, data, size);
+}
+
 void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2I(JNIEnv *env, jclass jclass1,
                                                                                          jlong jlong1, jstring jstring1,
                                                                                          jint jint1) {
@@ -122,4 +136,24 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_S
                                                                                                            jstring jstring2) {
     NativeString nativeString2(env, jstring2);
     write_and_grow(env, jclass1, jlong1, jstring1, nativeString2.value);
+}
+
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2JI_3I(JNIEnv *env, jclass jclass1,
+                                                                                            jlong jlong1,
+                                                                                            jstring jstring1,
+                                                                                            jlong jlong2,
+                                                                                            jint size,
+                                                                                            jintArray array) {
+    uint32_t* data = reinterpret_cast<uint32_t*>(jlong2);
+    write_and_grow(env, jclass1, jlong1, jstring1, data, size);
+}
+
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2JI_3F(JNIEnv *env, jclass jclass1,
+                                                                                            jlong jlong1,
+                                                                                            jstring jstring1,
+                                                                                            jlong jlong2,
+                                                                                            jint size,
+                                                                                            jfloatArray array) {
+    float_t* data = reinterpret_cast<float_t*>(jlong2);
+    write_and_grow(env, jclass1, jlong1, jstring1, data, size);
 }

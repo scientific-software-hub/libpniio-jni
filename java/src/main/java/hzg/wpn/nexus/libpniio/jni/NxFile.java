@@ -1,7 +1,10 @@
 package hzg.wpn.nexus.libpniio.jni;
 
+import sun.nio.ch.DirectBuffer;
+
 import java.io.Closeable;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 /**
  * @author ingvord
@@ -64,4 +67,21 @@ public class NxFile implements Closeable {
             throw new IOException(e);
         }
     }
+
+    public void write(String nx_path, int[] data) throws LibpniioException {
+        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length*4);
+
+        buffer.asIntBuffer().put(data);
+
+        LibpniioJni.write(ptr, nx_path, ((DirectBuffer)buffer).address(), data.length, data);
+    }
+
+    public void write(String nx_path, float[] data) throws LibpniioException {
+        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length*4);
+
+        buffer.asFloatBuffer().put(data);
+
+        LibpniioJni.write(ptr, nx_path, ((DirectBuffer)buffer).address(), data.length, data);
+    }
+
 }

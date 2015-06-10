@@ -45,6 +45,10 @@ public class LibpniioJni {
 
     public static native void write(long ptr, String nx_path, String value) throws LibpniioException;
 
+    public static native void write(long ptr, String nx_path, long address, int size, int[] type) throws LibpniioException;
+
+    public static native void write(long ptr, String nx_path, long address, int size, float[] type) throws LibpniioException;
+
     public static native void write_and_grow(long ptr, String nx_path, int value) throws LibpniioException;
 
     public static native void write_and_grow(long ptr, String nx_path, long value) throws LibpniioException;
@@ -54,4 +58,8 @@ public class LibpniioJni {
     public static native void write_and_grow(long ptr, String nx_path, double value) throws LibpniioException;
 
     public static native void write_and_grow(long ptr, String nx_path, String value) throws LibpniioException;
+
+    public static native void write_and_grow(long ptr, String nx_path, long address, int size, int[] type) throws LibpniioException;
+
+    public static native void write_and_grow(long ptr, String nx_path, long address, int size, float[] type) throws LibpniioException;
 }
