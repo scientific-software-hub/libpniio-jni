@@ -54,20 +54,6 @@ public class NxFile implements Closeable {
         LibpniioJni.write(ptr, nxPath, value);
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        if(!isClosed) LibpniioJni.closeFile(ptr);
-    }
-
-    public void close() throws IOException {
-        try {
-            LibpniioJni.closeFile(ptr);
-            isClosed = true;
-        } catch (LibpniioException e) {
-            throw new IOException(e);
-        }
-    }
-
     public void write(String nx_path, int[] data) throws LibpniioException {
         ByteBuffer buffer = ByteBuffer.allocateDirect(data.length*4);
 
@@ -84,4 +70,56 @@ public class NxFile implements Closeable {
         LibpniioJni.write(ptr, nx_path, ((DirectBuffer)buffer).address(), data.length, data);
     }
 
+    public void write_and_grow(String nxPath, int value) throws LibpniioException {
+        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    }
+
+    public void write_and_grow(String nxPath, long value) throws LibpniioException {
+        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    }
+
+    public void write_and_grow(String nxPath, float value) throws LibpniioException {
+        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    }
+
+    public void write_and_grow(String nxPath, double value) throws LibpniioException {
+        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    }
+
+    public void write_and_grow(String nxPath, String value) throws LibpniioException {
+        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    }
+
+    public void write_and_grow(String nx_path, int[] data) throws LibpniioException {
+        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length*4);
+
+        buffer.asIntBuffer().put(data);
+
+        LibpniioJni.write_and_grow(ptr, nx_path, ((DirectBuffer)buffer).address(), data.length, data);
+    }
+
+    public void write_and_grow(String nx_path, float[] data) throws LibpniioException {
+        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length*4);
+
+        buffer.asFloatBuffer().put(data);
+
+        LibpniioJni.write_and_grow(ptr, nx_path, ((DirectBuffer)buffer).address(), data.length, data);
+    }
+
+    
+    @Override
+    protected void finalize() throws Throwable {
+        if(!isClosed) LibpniioJni.closeFile(ptr);
+    }
+
+    public void close() throws IOException {
+        try {
+            LibpniioJni.closeFile(ptr);
+            isClosed = true;
+        } catch (LibpniioException e) {
+            throw new IOException(e);
+        }
+    }
+
+    
 }
