@@ -432,7 +432,7 @@
         <group type="NXlog" name="image">
           <field type="uint32" name="value">
             <dimensions rank="1">
-              <dim index="0" value="262144" />
+              <dim index="0" value="262144"/>
             </dimensions>
           </field>
           <field type="uint64" name="time"/>

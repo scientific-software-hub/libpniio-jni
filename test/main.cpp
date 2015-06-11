@@ -22,7 +22,7 @@ int main(int argc,char **argv) {
 
     cimg_library::CImg<uint32_t> img(512,512);
 
-    o.read(512*512,img.data());
+    o.read(262144,img.data());
 
     img.save_jpeg("test.out.jpeg");
 

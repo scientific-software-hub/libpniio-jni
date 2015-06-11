@@ -2,13 +2,38 @@ package hzg.wpn.nexus.libpniio.jni;
 
 import sun.misc.Unsafe;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 /**
  * @author ingvord
  * @since 3/31/15
  */
 public class LibpniioJni {
+    static {
+        Unsafe unsafe = getUnsafe();
+        int addressSize = unsafe.addressSize();
+        if (addressSize != 8)
+            throw new Error("Invalid address size [= " + addressSize + " Byte]! Address size must be equal to 8 Byte (64 bits). Probably using unsupported JVM... try x64 JVM");
+
+        String os_name = System.getProperty("os.name");
+
+        if (!"linux".equalsIgnoreCase(os_name)) throw new Error("Currently only linux is supported!");
+
+        extractJniLibrary();
+
+        System.setProperty("java.library.path", "lib/native/x86_64-linux-gnu");
+
+        hackClassLoader();
+
+        System.loadLibrary("pniio_jni");
+    }
+
     @SuppressWarnings("restriction")
     private static Unsafe getUnsafe() {
         try {
@@ -21,12 +46,28 @@ public class LibpniioJni {
         }
     }
 
-    static {
-        Unsafe unsafe = getUnsafe();
-        int addressSize = unsafe.addressSize();
-        if(addressSize != 8) throw new Error("Invalid address size [" +addressSize+ " Byte]! Address size must be equal to 8 Byte");
+    private static void extractJniLibrary() {
+        InputStream pniio_jni = LibpniioJni.class.getResourceAsStream("/lib/native/x86_64-linux-gnu/libpniio_jni.so");
 
-        System.loadLibrary("pniio_jni");
+        Path cwd = Paths.get("");
+
+        try {
+            Files.copy(pniio_jni, Files.createDirectories(cwd.resolve("lib/native/x86_64-linux-gnu")).resolve("libpniio_jni.so"), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new Error("Unable to extract native library.", e);
+        }
+    }
+
+    private static void hackClassLoader() {
+        try {
+            Field fieldSysPath = ClassLoader.class.getDeclaredField("sys_paths");
+            fieldSysPath.setAccessible(true);
+            fieldSysPath.set(null, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static native long createFile(String fileName, String nx_template) throws LibpniioException;

@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.bitbucket.ingvord</groupId>
+    <groupId>hzg.wpn.nexus</groupId>
     <artifactId>libpni-jni</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+
+    <developers>
+        <developer>
+            <id>khokhria</id>
+            <name>Igor Khokhriakov</name>
+            <email>igor.khokhriakov@hzg.de</email>
+            <organization>Helmholtz-Zentrum Geesthacht</organization>
+            <organizationUrl>hzg.de</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:hg:https://bitbucket.org/hzgwpn/libpniio-jni</connection>
+        <developerConnection>scm:hg:ssh://hg@bitbucket.org/hzgwpn/libpniio-jni</developerConnection>
+        <url>ssh://hg@bitbucket.org/hzgwpn/libpniio-jni</url>
+        <tag>${version}</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-hzg</id>
+            <url>https://api.bintray.com/maven/hzgde/hzg-wpn-projects/libpniio_jni</url>
+        </repository>
+    </distributionManagement>
 
 
     <dependencies>
@@ -17,4 +43,17 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

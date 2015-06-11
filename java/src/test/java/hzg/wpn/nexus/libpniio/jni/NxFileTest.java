@@ -3,15 +3,7 @@ package hzg.wpn.nexus.libpniio.jni;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import sun.nio.ch.DirectBuffer;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.DataBufferInt;
-import java.io.File;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -43,14 +35,31 @@ public class NxFileTest {
     }
 
     @Test
+    public void testWrite_float() throws Exception {
+        file.write("/entry/hardware/pco/camera/px_size", 3.14F);
+    }
+
+    @Test
     public void testWrite_intArr() throws Exception {
-        BufferedImage image = ImageIO.read(Files.newInputStream(Paths.get("url.png")));
+        byte[] bytes = Files.readAllBytes(Paths.get("url.bmp"));
 
-        byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+        int[] data = new int[bytes.length / 3 - 18];
 
-        int[] data = new int[pixels.length / 4];
+        for (int i = 0, j = 0; i < data.length; ++i) {
+            int rgb;//0
+            rgb = (bytes[j++] & 255) << 16;
+            rgb |= (bytes[j++] & 255) << 8;
+            rgb |= bytes[j++] & 255;
+            data[i] = rgb;
+        }
 
-        ByteBuffer.wrap(pixels).asIntBuffer().get(data);
+//        ByteBuffer.wrap(bytes).asIntBuffer().get(data);
+
+//        BufferedImage test_out = new BufferedImage(512,512,BufferedImage.TYPE_INT_RGB);
+//
+//        test_out.setRGB(0,0,512,512,data,0,512);
+//
+//        ImageIO.write(test_out,"bmp", new File("test_out.bmp"));
 
         file.write("/entry/scan/data/image/value",data);
     }
