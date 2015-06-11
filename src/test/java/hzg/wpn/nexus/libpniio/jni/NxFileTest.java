@@ -64,7 +64,7 @@ public class NxFileTest {
         file.write("/entry/scan/data/image/value",data);
     }
 
-    @Test
+    //@Test
     public void testWrite_intArr_and_grow() throws Exception {
         byte[] bytes = Files.readAllBytes(Paths.get("url.bmp"));
 
