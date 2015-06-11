@@ -63,4 +63,29 @@ public class NxFileTest {
 
         file.write("/entry/scan/data/image/value",data);
     }
+
+    @Test
+    public void testWrite_intArr_and_grow() throws Exception {
+        byte[] bytes = Files.readAllBytes(Paths.get("url.bmp"));
+
+        int[] data = new int[bytes.length / 3 - 18];
+
+        for (int i = 0, j = 0; i < data.length; ++i) {
+            int rgb;//0
+            rgb = (bytes[j++] & 255) << 16;
+            rgb |= (bytes[j++] & 255) << 8;
+            rgb |= bytes[j++] & 255;
+            data[i] = rgb;
+        }
+
+//        ByteBuffer.wrap(bytes).asIntBuffer().get(data);
+
+//        BufferedImage test_out = new BufferedImage(512,512,BufferedImage.TYPE_INT_RGB);
+//
+//        test_out.setRGB(0,0,512,512,data,0,512);
+//
+//        ImageIO.write(test_out,"bmp", new File("test_out.bmp"));
+
+        file.write_and_grow("/entry/scan/data/image/value",data);
+    }
 }
