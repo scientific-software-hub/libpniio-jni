@@ -37,7 +37,7 @@ public class LibpniioJniTest {
         LibpniioJni instance = new LibpniioJni();
 
         try {
-            instance.createFile("test.h5", "p07.nxdl.xml");
+            instance.createFile("target/test.h5", "p07.nxdl.xml");
         } catch (LibpniioException e) {
             e.printStackTrace();
         }

@@ -16,7 +16,7 @@ public class NxFileTest {
 
     @Before
     public void before() throws Exception{
-        file = NxFile.open("test.h5");
+        file = NxFile.open("target/test.h5");
     }
 
     @After
