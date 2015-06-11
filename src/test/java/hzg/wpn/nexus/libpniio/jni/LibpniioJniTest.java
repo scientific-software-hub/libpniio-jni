@@ -4,7 +4,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import sun.misc.Unsafe;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class LibpniioJniTest {
 
@@ -33,15 +36,8 @@ public class LibpniioJniTest {
     }
 
     @org.junit.Test
-    public void testCreateFile() {
-        LibpniioJni instance = new LibpniioJni();
-
-        try {
-            instance.createFile("target/test.h5", "p07.nxdl.xml");
-        } catch (LibpniioException e) {
-            e.printStackTrace();
-        }
-
-
+    public void testCreateFile() throws Exception {
+        Files.deleteIfExists(Paths.get("target/test.h5"));
+        LibpniioJni.createFile("target/test.h5", "p07.nxdl.xml");
     }
 }

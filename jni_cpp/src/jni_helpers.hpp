@@ -81,13 +81,16 @@ namespace jni {
             nxfield_t fld = get_object(env, jLong, jString);
 
             shape_t shape = pni::io::nx::get_shape<shape_t>(fld);
-            std::cout << "fld.size = " << fld.size() << std::endl;
+            std::cout << "fld.rank = " << fld.rank() << std::endl;
+            size_t fld_size = fld.size();
+            std::cout << "fld.size = " << fld_size << std::endl;
             std::cout << "size = " << size << std::endl;
             std::cout << "shape[0] = " << shape[0]<< std::endl;
             std::cout << "shape[1] = " << shape[1]<< std::endl;
             std::cout << "shape[2] = " << shape[2]<< std::endl;
 
-            fld.write(size,value);
+            if(fld_size < size) fld.grow(0, size);
+            fld(pni::core::slice(0, size)).write(size,value);
         CATCH
     }
 
@@ -96,12 +99,17 @@ namespace jni {
         TRY
             nxfield_t fld = get_object(env, jLong, jString);
             shape_t shape = pni::io::nx::get_shape<shape_t>(fld);
+            std::cout << "fld.rank = " << fld.rank() << std::endl;
+            size_t fld_size = fld.size();
+            std::cout << "fld.size = " << fld_size << std::endl;
+            std::cout << "size = " << size << std::endl;
             std::cout << "shape[0] = " << shape[0]<< std::endl;
             std::cout << "shape[1] = " << shape[1]<< std::endl;
             std::cout << "shape[2] = " << shape[2]<< std::endl;
 
-            fld.write(size,value);
-            fld.grow(0);
+            fld.grow(0, size);
+            fld(pni::core::slice(fld_size, fld_size + size)).write(size,value);
+            fld.grow(0, size);
         CATCH
     }
 
