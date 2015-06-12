@@ -76,31 +76,17 @@ public class LibpniioJni {
 
     public static native void closeFile(long ptr) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, int value) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, int value, boolean append) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, long value) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, long value, boolean append) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, float value) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, float value, boolean append) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, double value) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, double value, boolean append) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, String value) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, String value, boolean append) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, long address, int size, int[] type) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, long address, int size, int[] type, boolean append) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, long address, int size, float[] type) throws LibpniioException;
-
-    public static native void write_and_grow(long ptr, String nx_path, int value) throws LibpniioException;
-
-    public static native void write_and_grow(long ptr, String nx_path, long value) throws LibpniioException;
-
-    public static native void write_and_grow(long ptr, String nx_path, float value) throws LibpniioException;
-
-    public static native void write_and_grow(long ptr, String nx_path, double value) throws LibpniioException;
-
-    public static native void write_and_grow(long ptr, String nx_path, String value) throws LibpniioException;
-
-    public static native void write_and_grow(long ptr, String nx_path, long address, int size, int[] type) throws LibpniioException;
-
-    public static native void write_and_grow(long ptr, String nx_path, long address, int size, float[] type) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, long address, int size, float[] type, boolean append) throws LibpniioException;
 }

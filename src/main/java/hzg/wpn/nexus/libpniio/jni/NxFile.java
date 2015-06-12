@@ -20,10 +20,6 @@ public class NxFile implements Closeable {
         this.ptr = ptr;
     }
 
-    public String getFileName(){
-        return name;
-    }
-
     public static NxFile create(String fileName, String nxTemplate) throws LibpniioException {
         long ptr = LibpniioJni.createFile(fileName, nxTemplate);
         return new NxFile(fileName, ptr);
@@ -34,24 +30,28 @@ public class NxFile implements Closeable {
         return new NxFile(fileName, ptr);
     }
 
+    public String getFileName() {
+        return name;
+    }
+
     public void write(String nxPath, int value) throws LibpniioException {
-        LibpniioJni.write(ptr, nxPath, value);
+        LibpniioJni.write(ptr, nxPath, value, false);
     }
 
     public void write(String nxPath, long value) throws LibpniioException {
-        LibpniioJni.write(ptr, nxPath, value);
+        LibpniioJni.write(ptr, nxPath, value, false);
     }
 
     public void write(String nxPath, float value) throws LibpniioException {
-        LibpniioJni.write(ptr, nxPath, value);
+        LibpniioJni.write(ptr, nxPath, value, false);
     }
 
     public void write(String nxPath, double value) throws LibpniioException {
-        LibpniioJni.write(ptr, nxPath, value);
+        LibpniioJni.write(ptr, nxPath, value, false);
     }
 
     public void write(String nxPath, String value) throws LibpniioException {
-        LibpniioJni.write(ptr, nxPath, value);
+        LibpniioJni.write(ptr, nxPath, value, false);
     }
 
     public void write(String nx_path, int[] data) throws LibpniioException {
@@ -59,7 +59,7 @@ public class NxFile implements Closeable {
 
         buffer.asIntBuffer().put(data);
 
-        LibpniioJni.write(ptr, nx_path, ((DirectBuffer)buffer).address(), data.length, data);
+        LibpniioJni.write(ptr, nx_path, ((DirectBuffer) buffer).address(), data.length, data, false);
     }
 
     public void write(String nx_path, float[] data) throws LibpniioException {
@@ -67,43 +67,43 @@ public class NxFile implements Closeable {
 
         buffer.asFloatBuffer().put(data);
 
-        LibpniioJni.write(ptr, nx_path, ((DirectBuffer)buffer).address(), data.length, data);
+        LibpniioJni.write(ptr, nx_path, ((DirectBuffer) buffer).address(), data.length, data, false);
     }
 
-    public void write_and_grow(String nxPath, int value) throws LibpniioException {
-        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    public void append(String nxPath, int value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value, true);
     }
 
-    public void write_and_grow(String nxPath, long value) throws LibpniioException {
-        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    public void append(String nxPath, long value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value, true);
     }
 
-    public void write_and_grow(String nxPath, float value) throws LibpniioException {
-        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    public void append(String nxPath, float value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value, true);
     }
 
-    public void write_and_grow(String nxPath, double value) throws LibpniioException {
-        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    public void append(String nxPath, double value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value, true);
     }
 
-    public void write_and_grow(String nxPath, String value) throws LibpniioException {
-        LibpniioJni.write_and_grow(ptr, nxPath, value);
+    public void append(String nxPath, String value) throws LibpniioException {
+        LibpniioJni.write(ptr, nxPath, value, true);
     }
 
-    public void write_and_grow(String nx_path, int[] data) throws LibpniioException {
+    public void append(String nx_path, int[] data) throws LibpniioException {
         ByteBuffer buffer = ByteBuffer.allocateDirect(data.length*4);
 
         buffer.asIntBuffer().put(data);
 
-        LibpniioJni.write_and_grow(ptr, nx_path, ((DirectBuffer)buffer).address(), data.length, data);
+        LibpniioJni.write(ptr, nx_path, ((DirectBuffer) buffer).address(), data.length, data, true);
     }
 
-    public void write_and_grow(String nx_path, float[] data) throws LibpniioException {
+    public void append(String nx_path, float[] data) throws LibpniioException {
         ByteBuffer buffer = ByteBuffer.allocateDirect(data.length*4);
 
         buffer.asFloatBuffer().put(data);
 
-        LibpniioJni.write_and_grow(ptr, nx_path, ((DirectBuffer)buffer).address(), data.length, data);
+        LibpniioJni.write(ptr, nx_path, ((DirectBuffer) buffer).address(), data.length, data, true);
     }
 
     

@@ -18,7 +18,7 @@ auto libpniio::jni::get_object(JNIEnv *env, jlong jLong, jstring jString) -> nxo
 
 jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass jClass, jstring jString,
                                                              jstring nxTemplate) {
-    try {
+    TRY
         NativeString nativeString(env, jString);
         NativeString nativeString1(env, nxTemplate);
 
@@ -32,128 +32,67 @@ jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass
 
         auto *rv = new NxFile(file);
         return reinterpret_cast<jlong>(rv);
-    } catch (const exception_t &pniex) {
-        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
-        env->ThrowNew(libpniioExceptionClass, pniex.description().c_str());
-    }
+    CATCH
 }
 
 jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_openFile(JNIEnv *env, jclass jClass, jstring jString) {
-    try {
+    TRY
         NativeString nativeString(env, jString);
         auto file = nxfile_t::open_file(nativeString.value, false);
         auto *rv = new NxFile(file);
         return reinterpret_cast<jlong>(rv);
-    } catch (const pni::core::exception &pniex) {
-        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
-        env->ThrowNew(libpniioExceptionClass, pniex.description().c_str());
-    }
+    CATCH
 }
 
 void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_closeFile(JNIEnv *env, jclass jClass, jlong jLong) {
-    try {
+    TRY
         NxFile *nxFile = reinterpret_cast<NxFile *>(jLong);
         nxFile->file.close();
         delete nxFile;
-    } catch (const pni::core::exception &pniex) {
-        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
-        env->ThrowNew(libpniioExceptionClass, pniex.description().c_str());
-    }
+    CATCH
 }
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2I(JNIEnv *env, jclass jClass, jlong jLong,
-                                                                               jstring jString, jint jInt) {
-    write(env, jClass, jLong, jString, jInt);
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2IZ(JNIEnv *env, jclass jClass, jlong jLong,
+                                                                               jstring jString, jint jInt, jboolean append) {
+    write(env, jClass, jLong, jString, jInt, append);
 }
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2J(JNIEnv *env, jclass jClass, jlong jLong,
-                                                                              jstring jString, jlong jLong1) {
-    write(env, jClass, jLong, jString, jLong1);
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JZ(JNIEnv *env, jclass jClass, jlong jLong,
+                                                                              jstring jString, jlong jLong1, jboolean append) {
+    write(env, jClass, jLong, jString, jLong1, append);
 }
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2F(JNIEnv *env, jclass jClass, jlong jLong,
-                                                                              jstring jString, jfloat jFloat) {
-    write(env, jClass, jLong, jString, jFloat);
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2FZ(JNIEnv *env, jclass jClass, jlong jLong,
+                                                                              jstring jString, jfloat jFloat, jboolean append) {
+    write(env, jClass, jLong, jString, jFloat, append);
 }
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2D(JNIEnv *env, jclass jClass, jlong jLong,
-                                                                              jstring jString, jdouble jDouble) {
-    write(env, jClass, jLong, jString, jDouble);
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2DZ(JNIEnv *env, jclass jClass, jlong jLong,
+                                                                              jstring jString, jdouble jDouble, jboolean append) {
+    write(env, jClass, jLong, jString, jDouble, append);
 }
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljava_lang_String_2(JNIEnv *env,
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljava_lang_String_2Z(JNIEnv *env,
                                                                                                  jclass jClass,
                                                                                                  jlong jLong,
                                                                                                  jstring jString,
-                                                                                                 jstring jstring2) {
+                                                                                                 jstring jstring2,
+                                                                                                 jboolean append
+) {
     NativeString nativeString2(env, jstring2);
-    write(env, jClass, jLong, jString, nativeString2.value);
+    write(env, jClass, jLong, jString, nativeString2.value, append);
 }
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3I(JNIEnv *env, jclass jclass1,
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3IZ(JNIEnv *env, jclass jclass1,
                                                                                  jlong jlong1, jstring jstring1,
-                                                                                 jlong jlong2, jint size, jintArray array) {
+                                                                                 jlong jlong2, jint size, jintArray array, jboolean append) {
     uint32_t* data = reinterpret_cast<uint32_t*>(jlong2);
-    write(env, jclass1, jlong1, jstring1, data, size);
+    write(env, jclass1, jlong1, jstring1, data, size, append);
 }
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3F(JNIEnv *env, jclass jclass1,
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3FZ(JNIEnv *env, jclass jclass1,
                                                                                  jlong jlong1, jstring jstring1,
-                                                                                 jlong jlong2, jint size, jfloatArray array) {
+                                                                                 jlong jlong2, jint size, jfloatArray array, jboolean append) {
     float_t* data = reinterpret_cast<float_t*>(jlong2);
-    write(env, jclass1, jlong1, jstring1, data, size);
-}
-
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2I(JNIEnv *env, jclass jclass1,
-                                                                                         jlong jlong1, jstring jstring1,
-                                                                                         jint jint1) {
-    write_and_grow(env, jclass1, jlong1, jstring1,jint1);
-
-}
-
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2J(JNIEnv *env, jclass jclass1,
-                                                                                         jlong jlong1, jstring jstring1,
-                                                                                         jlong jlong2) {
-    write_and_grow(env, jclass1, jlong1, jstring1, jlong1);
-}
-
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2F(JNIEnv *env, jclass jclass1,
-                                                                                         jlong jlong1, jstring jstring1,
-                                                                                         jfloat jfloat1) {
-    write_and_grow(env, jclass1, jlong1, jstring1, jfloat1);
-}
-
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2D(JNIEnv *env, jclass jclass1,
-                                                                                         jlong jlong1, jstring jstring1,
-                                                                                         jdouble jdouble1) {
-    write_and_grow(env, jclass1, jlong1, jstring1, jdouble1);
-}
-
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2Ljava_lang_String_2(JNIEnv *env,
-                                                                                                           jclass jclass1,
-                                                                                                           jlong jlong1,
-                                                                                                           jstring jstring1,
-                                                                                                           jstring jstring2) {
-    NativeString nativeString2(env, jstring2);
-    write_and_grow(env, jclass1, jlong1, jstring1, nativeString2.value);
-}
-
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2JI_3I(JNIEnv *env, jclass jclass1,
-                                                                                            jlong jlong1,
-                                                                                            jstring jstring1,
-                                                                                            jlong jlong2,
-                                                                                            jint size,
-                                                                                            jintArray array) {
-    uint32_t* data = reinterpret_cast<uint32_t*>(jlong2);
-    write_and_grow(env, jclass1, jlong1, jstring1, data, size);
-}
-
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write_1and_1grow__JLjava_lang_String_2JI_3F(JNIEnv *env, jclass jclass1,
-                                                                                            jlong jlong1,
-                                                                                            jstring jstring1,
-                                                                                            jlong jlong2,
-                                                                                            jint size,
-                                                                                            jfloatArray array) {
-    float_t* data = reinterpret_cast<float_t*>(jlong2);
-    write_and_grow(env, jclass1, jlong1, jstring1, data, size);
+    write(env, jclass1, jlong1, jstring1, data, size, append);
 }

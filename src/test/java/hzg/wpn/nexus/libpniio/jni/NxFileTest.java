@@ -40,6 +40,18 @@ public class NxFileTest {
     }
 
     @Test
+    public void testWrite_double() throws Exception {
+        file.write("/entry/hardware/beam_current/current/value", Math.random());
+        file.write("/entry/hardware/beam_current/current/time", System.currentTimeMillis());
+    }
+
+    @Test
+    public void testAppend_double() throws Exception {
+        file.append("/entry/hardware/beam_current/current/value", Math.random());
+        file.append("/entry/hardware/beam_current/current/time", System.currentTimeMillis());
+    }
+
+    @Test
     public void testWrite_intArr() throws Exception {
         byte[] bytes = Files.readAllBytes(Paths.get("url.bmp"));
 
@@ -65,7 +77,7 @@ public class NxFileTest {
     }
 
     @Test
-    public void testWrite_intArr_and_grow() throws Exception {
+    public void testWrite_intArr_append() throws Exception {
         byte[] bytes = Files.readAllBytes(Paths.get("url.bmp"));
 
         int[] data = new int[bytes.length / 3 - 18];
@@ -86,6 +98,6 @@ public class NxFileTest {
 //
 //        ImageIO.write(test_out,"bmp", new File("test_out.bmp"));
 
-        file.write_and_grow("/entry/scan/data/image/value",data);
+        file.append("/entry/scan/data/image/value", data);
     }
 }

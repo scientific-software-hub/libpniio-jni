@@ -11,6 +11,7 @@
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml.hpp>
 #include <pni/core/error/exceptions.hpp>
+#include <pni/core/arrays.hpp>
 #include <pni/io/nx/algorithms/write.hpp>
 #include <pni/io/nx/algorithms/get_object.hpp>
 #include <pni/io/nx/algorithms/grow.hpp>
@@ -57,62 +58,39 @@ namespace jni {
     auto get_object(JNIEnv * env, jlong jLong, jstring jString) -> nxobject_t;
 
     template<typename T>
-    void write(JNIEnv * env, jclass, jlong jLong, jstring jString, T value) {
+    void write(JNIEnv * env, jclass, jlong jLong, jstring jString, T value, bool append) {
+        using namespace pni::core;
+        using namespace pni::io::nx;
+
         TRY
-            auto o = get_object(env, jLong, jString);
+            nxfield_t fld = get_object(env, jLong, jString);
 
-            pni::io::nx::write(o,value);
-        CATCH
-    }
+            if(append) grow(fld,0);
 
-    template<typename T>
-    void write_and_grow(JNIEnv * env, jclass clazz, jlong jLong, jstring jString, T value) {
-        TRY
-            auto&& o = get_object(env, jLong, jString);
+            size_t ndx = fld.size();
+            std::cout << "ndx = " << ndx << std::endl;
 
-            pni::io::nx::write(o,value);
-            pni::io::nx::grow(o);
+            fld(ndx - 1).write(value);
         CATCH
     }
 
     template <typename T>
-    inline void write(JNIEnv * env, jclass clazz, jlong jLong, jstring jString, T* value, size_t size){
+    inline void write(JNIEnv * env, jclass clazz, jlong jLong, jstring jString, T* value, size_t size,bool append){
+        using namespace pni::core;
+        using namespace pni::io::nx;
         TRY
             nxfield_t fld = get_object(env, jLong, jString);
 
-            shape_t shape = pni::io::nx::get_shape<shape_t>(fld);
-            std::cout << "fld.rank = " << fld.rank() << std::endl;
-            size_t fld_size = fld.size();
-            std::cout << "fld.size = " << fld_size << std::endl;
-            std::cout << "size = " << size << std::endl;
-            std::cout << "shape[0] = " << shape[0]<< std::endl;
-            std::cout << "shape[1] = " << shape[1]<< std::endl;
-            std::cout << "shape[2] = " << shape[2]<< std::endl;
+            shape_t shape = get_shape<shape_t>(fld);
 
-            if(fld_size < size) fld.grow(0, size);
-            fld(pni::core::slice(0, size)).write(size,value);
+            size_t ndx = append ? shape[0] : 0;
+            size_t dim_x = shape[1];
+            size_t dim_y = shape[2];
+
+            fld.grow(0);
+            fld(ndx, slice(0, dim_x), slice(0, dim_y)).write(size,value);
         CATCH
     }
-
-    template <typename T>
-    inline void write_and_grow(JNIEnv * env, jclass clazz, jlong jLong, jstring jString, T* value, size_t size){
-        TRY
-            nxfield_t fld = get_object(env, jLong, jString);
-            shape_t shape = pni::io::nx::get_shape<shape_t>(fld);
-            std::cout << "fld.rank = " << fld.rank() << std::endl;
-            size_t fld_size = fld.size();
-            std::cout << "fld.size = " << fld_size << std::endl;
-            std::cout << "size = " << size << std::endl;
-            std::cout << "shape[0] = " << shape[0]<< std::endl;
-            std::cout << "shape[1] = " << shape[1]<< std::endl;
-            std::cout << "shape[2] = " << shape[2]<< std::endl;
-
-            fld.grow(0, size);
-            fld(pni::core::slice(fld_size, fld_size + size)).write(size,value);
-            fld.grow(0, size);
-        CATCH
-    }
-
 }//namespace
 }//namespace
 #endif //LIBPNIIO_JNI_JNI_HELPERS_HPP
