@@ -68,14 +68,13 @@ namespace jni {
             if(append) grow(fld,0);
 
             size_t ndx = fld.size();
-            std::cout << "ndx = " << ndx << std::endl;
 
             fld(ndx - 1).write(value);
         CATCH
     }
 
     template <typename T>
-    inline void write(JNIEnv * env, jclass clazz, jlong jLong, jstring jString, T* value, size_t size,bool append){
+    inline void write_image(JNIEnv * env, jclass clazz, jlong jLong, jstring jString, T* value, size_t size,bool append){
         using namespace pni::core;
         using namespace pni::io::nx;
         TRY

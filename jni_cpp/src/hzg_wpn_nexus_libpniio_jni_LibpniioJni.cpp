@@ -87,12 +87,12 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3
                                                                                  jlong jlong1, jstring jstring1,
                                                                                  jlong jlong2, jint size, jintArray array, jboolean append) {
     uint32_t* data = reinterpret_cast<uint32_t*>(jlong2);
-    write(env, jclass1, jlong1, jstring1, data, size, append);
+    write_image(env, jclass1, jlong1, jstring1, data, size, append);
 }
 
 void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3FZ(JNIEnv *env, jclass jclass1,
                                                                                  jlong jlong1, jstring jstring1,
                                                                                  jlong jlong2, jint size, jfloatArray array, jboolean append) {
     float_t* data = reinterpret_cast<float_t*>(jlong2);
-    write(env, jclass1, jlong1, jstring1, data, size, append);
+    write_image(env, jclass1, jlong1, jstring1, data, size, append);
 }
