@@ -74,6 +74,14 @@ JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava
 /*
  * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
  * Method:    write
+ * Signature: (JLjava/lang/String;JI[SZ)V
+ */
+JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3SZ
+  (JNIEnv *, jclass, jlong, jstring, jlong, jint, jshortArray, jboolean);
+
+/*
+ * Class:     hzg_wpn_nexus_libpniio_jni_LibpniioJni
+ * Method:    write
  * Signature: (JLjava/lang/String;JI[IZ)V
  */
 JNIEXPORT void JNICALL Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3IZ

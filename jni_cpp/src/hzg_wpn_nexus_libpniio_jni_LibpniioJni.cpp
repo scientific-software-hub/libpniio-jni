@@ -83,6 +83,16 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljav
     write(env, jClass, jLong, jString, nativeString2.value, append);
 }
 
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3SZ(JNIEnv *env, jclass jclass1,
+                                                                                   jlong jlong1, jstring jstring1,
+                                                                                   jlong jlong2, jint size,
+                                                                                   jshortArray array,
+                                                                                   jboolean append) {
+    uint16_t* data = reinterpret_cast<uint16_t*>(jlong2);
+    write_image(env, jclass1, jlong1, jstring1, data, size, append);
+}
+
+
 void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3IZ(JNIEnv *env, jclass jclass1,
                                                                                  jlong jlong1, jstring jstring1,
                                                                                  jlong jlong2, jint size, jintArray array, jboolean append) {
@@ -96,3 +106,4 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3
     float_t* data = reinterpret_cast<float_t*>(jlong2);
     write_image(env, jclass1, jlong1, jstring1, data, size, append);
 }
+

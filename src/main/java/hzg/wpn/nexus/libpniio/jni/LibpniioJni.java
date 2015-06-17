@@ -86,6 +86,8 @@ public class LibpniioJni {
 
     public static native void write(long ptr, String nx_path, String value, boolean append) throws LibpniioException;
 
+    public static native void write(long ptr, String nx_path, long address, int size, short[] type, boolean append) throws LibpniioException;
+
     public static native void write(long ptr, String nx_path, long address, int size, int[] type, boolean append) throws LibpniioException;
 
     public static native void write(long ptr, String nx_path, long address, int size, float[] type, boolean append) throws LibpniioException;

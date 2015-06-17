@@ -54,6 +54,10 @@ public class NxFile implements Closeable {
         LibpniioJni.write(ptr, nxPath, value, false);
     }
 
+    public void write(String nx_path, short[] data) throws LibpniioException {
+        write(nx_path, data, false);
+    }
+
     public void write(String nx_path, int[] data) throws LibpniioException {
         write(nx_path, data, false);
     }
@@ -82,6 +86,10 @@ public class NxFile implements Closeable {
         LibpniioJni.write(ptr, nxPath, value, true);
     }
 
+    public void append(String nx_path, short[] data) throws LibpniioException {
+        write(nx_path, data, true);
+    }
+
     public void append(String nx_path, int[] data) throws LibpniioException {
         write(nx_path, data, true);
     }
@@ -108,6 +116,14 @@ public class NxFile implements Closeable {
 
     public void write(String nxPath, String value, boolean append) throws LibpniioException {
         LibpniioJni.write(ptr, nxPath, value, append);
+    }
+
+    public void write(String nx_path, short[] data, boolean append) throws LibpniioException {
+        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length * 2);
+
+        buffer.asShortBuffer().put(data);
+
+        LibpniioJni.write(ptr, nx_path, ((DirectBuffer) buffer).address(), data.length, data, append);
     }
 
     public void write(String nx_path, int[] data, boolean append) throws LibpniioException {
