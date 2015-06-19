@@ -49,7 +49,9 @@ public class LibpniioJni {
     private static void extractJniLibrary() {
         InputStream pniio_jni = LibpniioJni.class.getResourceAsStream("/lib/native/x86_64-linux-gnu/libpniio_jni.so");
 
-        Path cwd = Paths.get("");
+        String root = System.getProperty("XENV_ROOT") != null ? System.getProperty("XENV_ROOT") : "";
+
+        Path cwd = Paths.get(root);
 
         try {
             Files.copy(pniio_jni, Files.createDirectories(cwd.resolve("lib/native/x86_64-linux-gnu")).resolve("libpniio_jni.so"), StandardCopyOption.REPLACE_EXISTING);
