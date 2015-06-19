@@ -15,6 +15,8 @@ import java.nio.file.StandardCopyOption;
  * @since 3/31/15
  */
 public class LibpniioJni {
+    public static final String XENV_ROOT = System.getProperty("XENV_ROOT") != null ? System.getProperty("XENV_ROOT") : "";
+
     static {
         Unsafe unsafe = getUnsafe();
         int addressSize = unsafe.addressSize();
@@ -27,12 +29,13 @@ public class LibpniioJni {
 
         extractJniLibrary();
 
-        System.setProperty("java.library.path", "lib/native/x86_64-linux-gnu");
+        System.setProperty("java.library.path", Paths.get(XENV_ROOT, "lib/native/x86_64-linux-gnu").toAbsolutePath().toString());
 
         hackClassLoader();
 
         System.loadLibrary("pniio_jni");
     }
+
 
     @SuppressWarnings("restriction")
     private static Unsafe getUnsafe() {
@@ -49,9 +52,7 @@ public class LibpniioJni {
     private static void extractJniLibrary() {
         InputStream pniio_jni = LibpniioJni.class.getResourceAsStream("/lib/native/x86_64-linux-gnu/libpniio_jni.so");
 
-        String root = System.getProperty("XENV_ROOT") != null ? System.getProperty("XENV_ROOT") : "";
-
-        Path cwd = Paths.get(root);
+        Path cwd = Paths.get(XENV_ROOT);
 
         try {
             Files.copy(pniio_jni, Files.createDirectories(cwd.resolve("lib/native/x86_64-linux-gnu")).resolve("libpniio_jni.so"), StandardCopyOption.REPLACE_EXISTING);
