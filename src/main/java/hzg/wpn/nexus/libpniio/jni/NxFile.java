@@ -5,6 +5,7 @@ import sun.nio.ch.DirectBuffer;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * @author ingvord
@@ -51,6 +52,7 @@ public class NxFile implements Closeable {
     }
 
     public void write(String nxPath, String value) throws LibpniioException {
+        if (value == null) throw new NullPointerException("String argument is null!");
         LibpniioJni.write(ptr, nxPath, value, false);
     }
 
@@ -119,27 +121,27 @@ public class NxFile implements Closeable {
     }
 
     public void write(String nx_path, short[] data, boolean append) throws LibpniioException {
-        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length * 2);
+        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length * 2).order(ByteOrder.nativeOrder());
 
         buffer.asShortBuffer().put(data);
 
-        LibpniioJni.write(ptr, nx_path, ((DirectBuffer) buffer).address(), data.length, data, append);
+        LibpniioJni.write(ptr, nx_path, (DirectBuffer) buffer, data.length, data, append);
     }
 
     public void write(String nx_path, int[] data, boolean append) throws LibpniioException {
-        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length*4);
+        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length * 4).order(ByteOrder.nativeOrder());
 
         buffer.asIntBuffer().put(data);
 
-        LibpniioJni.write(ptr, nx_path, ((DirectBuffer) buffer).address(), data.length, data, append);
+        LibpniioJni.write(ptr, nx_path, (DirectBuffer) buffer, data.length, data, append);
     }
 
     public void write(String nx_path, float[] data, boolean append) throws LibpniioException {
-        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length*4);
+        ByteBuffer buffer = ByteBuffer.allocateDirect(data.length * 4).order(ByteOrder.nativeOrder());
 
         buffer.asFloatBuffer().put(data);
 
-        LibpniioJni.write(ptr, nx_path, ((DirectBuffer) buffer).address(), data.length, data, append);
+        LibpniioJni.write(ptr, nx_path, (DirectBuffer) buffer, data.length, data, append);
     }
 
     @Override

@@ -26,32 +26,32 @@ public class NxFileTest {
 
     @Test
     public void testWrite_String() throws Exception {
-        file.write("/entry/title","Hello World!!!");
+        file.write("/entry/string/value", "Hello World!!!");
     }
 
     @Test
     public void testWrite_int() throws Exception {
-        file.write("/entry/hardware/pco/camera/x0",12);
+        file.write("/entry/int/value", 12);
     }
 
     @Test
     public void testWrite_float() throws Exception {
-        file.write("/entry/hardware/pco/camera/px_size", 3.14F);
+        file.write("/entry/float/value", 3.14F);
     }
 
     @Test
     public void testWrite_double() throws Exception {
-        file.write("/entry/hardware/beam_current/current/value", Math.random());
-        file.write("/entry/hardware/beam_current/current/time", System.currentTimeMillis());
+        file.write("/entry/double/value", Math.random());
+        file.write("/entry/double/time", System.currentTimeMillis());
     }
 
     @Test
     public void testAppend_double() throws Exception {
-        file.write("/entry/hardware/beam_current/current/value", Math.random(), true);
-        file.write("/entry/hardware/beam_current/current/time", System.currentTimeMillis(), true);
+        file.write("/entry/double/value", Math.random(), true);
+        file.write("/entry/double/time", System.currentTimeMillis(), true);
     }
 
-    @Test
+    //@Test
     public void testWrite_intArr() throws Exception {
         byte[] bytes = Files.readAllBytes(Paths.get("url.bmp"));
 
@@ -78,7 +78,7 @@ public class NxFileTest {
 
     @Test
     public void testWriteString() throws Exception {
-        file.write("/entry/title", "Hello World!!!");
+        file.write("/entry/string/value", "Hello World!!!");
     }
 
     @Test
@@ -104,5 +104,30 @@ public class NxFileTest {
 //        ImageIO.write(test_out,"bmp", new File("test_out.bmp"));
 
         file.write("/entry/scan/data/image/value", data, true);
+    }
+
+    @Test
+    public void testWriteShortArray() throws Exception {
+        file.write("/entry/data/data", new short[]{
+                255, 0, 0, 0, 0, 0, 0, 255,
+                0, 0, 255, 255, 255, 255, 0, 0,
+                0, 0, 255, 255, 255, 255, 0, 0,
+                255, 0, 0, 0, 0, 0, 0, 255
+        }, true);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testWriteString_null() throws Exception {
+        file.write("/entry/string/value", (String) null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testWriteArray_null() throws Exception {
+        file.write("/entry/data/data", (short[]) null);
+    }
+
+    @Test
+    public void testWriteDouble_null() throws Exception {
+        file.write("/entry/double/value", Double.NaN);
     }
 }

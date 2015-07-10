@@ -83,27 +83,27 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljav
     write(env, jClass, jLong, jString, nativeString2.value, append);
 }
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3SZ(JNIEnv *env, jclass jclass1,
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Lsun_nio_ch_DirectBuffer_2I_3SZ(JNIEnv *env, jclass jclass1,
                                                                                    jlong jlong1, jstring jstring1,
-                                                                                   jlong jlong2, jint size,
+                                                                                   jobject jlong2, jint size,
                                                                                    jshortArray array,
                                                                                    jboolean append) {
-    uint16_t* data = reinterpret_cast<uint16_t*>(jlong2);
+    uint16_t* data = reinterpret_cast<uint16_t*>(env->GetDirectBufferAddress(jlong2));
     write_image(env, jclass1, jlong1, jstring1, data, size, append);
 }
 
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3IZ(JNIEnv *env, jclass jclass1,
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Lsun_nio_ch_DirectBuffer_2I_3IZ(JNIEnv *env, jclass jclass1,
                                                                                  jlong jlong1, jstring jstring1,
-                                                                                 jlong jlong2, jint size, jintArray array, jboolean append) {
-    uint32_t* data = reinterpret_cast<uint32_t*>(jlong2);
+                                                                                   jobject jlong2, jint size, jintArray array, jboolean append) {
+    uint32_t* data = reinterpret_cast<uint32_t*>(env->GetDirectBufferAddress(jlong2));
     write_image(env, jclass1, jlong1, jstring1, data, size, append);
 }
 
-void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JI_3FZ(JNIEnv *env, jclass jclass1,
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Lsun_nio_ch_DirectBuffer_2I_3FZ(JNIEnv *env, jclass jclass1,
                                                                                  jlong jlong1, jstring jstring1,
-                                                                                 jlong jlong2, jint size, jfloatArray array, jboolean append) {
-    float_t* data = reinterpret_cast<float_t*>(jlong2);
+                                                                                   jobject jlong2, jint size, jfloatArray array, jboolean append) {
+    float_t* data = reinterpret_cast<float_t*>(env->GetDirectBufferAddress(jlong2));
     write_image(env, jclass1, jlong1, jstring1, data, size, append);
 }
 

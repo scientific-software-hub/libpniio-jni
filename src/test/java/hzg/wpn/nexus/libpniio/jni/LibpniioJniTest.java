@@ -1,10 +1,8 @@
 package hzg.wpn.nexus.libpniio.jni;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import sun.misc.Unsafe;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -38,6 +36,6 @@ public class LibpniioJniTest {
     @org.junit.Test
     public void testCreateFile() throws Exception {
         Files.deleteIfExists(Paths.get("target/test.h5"));
-        LibpniioJni.createFile("target/test.h5", "p07.nxdl.xml");
+        LibpniioJni.createFile("target/test.h5", "test.nxdl.xml");
     }
 }

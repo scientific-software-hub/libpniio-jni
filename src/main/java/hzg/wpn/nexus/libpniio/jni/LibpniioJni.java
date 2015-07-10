@@ -1,6 +1,7 @@
 package hzg.wpn.nexus.libpniio.jni;
 
 import sun.misc.Unsafe;
+import sun.nio.ch.DirectBuffer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -89,9 +90,9 @@ public class LibpniioJni {
 
     public static native void write(long ptr, String nx_path, String value, boolean append) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, long address, int size, short[] type, boolean append) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, DirectBuffer buffer, int size, short[] type, boolean append) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, long address, int size, int[] type, boolean append) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, DirectBuffer buffer, int size, int[] type, boolean append) throws LibpniioException;
 
-    public static native void write(long ptr, String nx_path, long address, int size, float[] type, boolean append) throws LibpniioException;
+    public static native void write(long ptr, String nx_path, DirectBuffer buffer, int size, float[] type, boolean append) throws LibpniioException;
 }
