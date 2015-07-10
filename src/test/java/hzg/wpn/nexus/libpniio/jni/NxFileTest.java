@@ -81,7 +81,7 @@ public class NxFileTest {
         file.write("/entry/string/value", "Hello World!!!");
     }
 
-    @Test
+    //@Test
     public void testWrite_intArr_append() throws Exception {
         byte[] bytes = Files.readAllBytes(Paths.get("url.bmp"));
 
