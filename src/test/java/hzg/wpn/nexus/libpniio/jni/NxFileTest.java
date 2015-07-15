@@ -2,7 +2,11 @@ package hzg.wpn.nexus.libpniio.jni;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,11 +16,20 @@ import java.nio.file.Paths;
  * @since 4/1/15
  */
 public class NxFileTest {
+    public static final String TEST_NXDL_XML = "test.nxdl.xml";
     private NxFile file;
+    private String testName;
+    @Rule
+    public TestRule watcher = new TestWatcher() {
+        protected void starting(Description description) {
+            testName = description.getMethodName();
+        }
+    };
 
     @Before
     public void before() throws Exception{
-        file = NxFile.open("target/test.h5");
+        Files.deleteIfExists(Paths.get("target/" + testName + ".h5"));
+        file = NxFile.create("target/" + testName + ".h5", TEST_NXDL_XML);
     }
 
     @After
@@ -46,7 +59,21 @@ public class NxFileTest {
     }
 
     @Test
+    public void testAppend_double_Once() throws Exception {
+        file.write("/entry/double/value", Math.random(), true);
+        file.write("/entry/double/time", System.currentTimeMillis(), true);
+    }
+
+    @Test
     public void testAppend_double() throws Exception {
+        file.write("/entry/double/value", Math.random(), true);
+        file.write("/entry/double/time", System.currentTimeMillis(), true);
+        file.write("/entry/double/value", Math.random(), true);
+        file.write("/entry/double/time", System.currentTimeMillis(), true);
+        file.write("/entry/double/value", Math.random(), true);
+        file.write("/entry/double/time", System.currentTimeMillis(), true);
+        file.write("/entry/double/value", Math.random(), true);
+        file.write("/entry/double/time", System.currentTimeMillis(), true);
         file.write("/entry/double/value", Math.random(), true);
         file.write("/entry/double/time", System.currentTimeMillis(), true);
     }
