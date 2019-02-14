@@ -13,7 +13,7 @@ using namespace pni::io::nx;
 using namespace pni::io::nx::h5;
 
 int main(int argc,char **argv) {
-    h5::nxfile f = h5::nxfile::open_file("/home/khokhria/Projects/hzg.wpn/jDataFormatServer/var/test.h5");
+    h5::nxfile f = h5::nxfile::open_file("/home/khokhria/Projects/jDFS/var/test.nx");
 
     h5::nxfield o = get_object(f.root(), nxpath::from_string("/entry/data/data"));
 
