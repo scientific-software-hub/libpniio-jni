@@ -4,7 +4,7 @@
 
     <groupId>hzg.wpn.nexus</groupId>
     <artifactId>libpniio-jni</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
 
 
@@ -22,7 +22,7 @@
         <connection>scm:hg:https://bitbucket.org/hzgwpn/libpniio-jni</connection>
         <developerConnection>scm:hg:ssh://hg@bitbucket.org/hzgwpn/libpniio-jni</developerConnection>
         <url>ssh://hg@bitbucket.org/hzgwpn/libpniio-jni</url>
-        <tag>${version}</tag>
+        <tag>libpniio-jni-3.0.0</tag>
     </scm>
 
     <distributionManagement>
