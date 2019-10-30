@@ -18,10 +18,15 @@
         </developer>
     </developers>
 
+    <properties>
+        <github.organization>hzg-wpi</github.organization>
+        <github.repo>libpniio-jni</github.repo>
+    </properties>
+
     <scm>
-        <connection>scm:hg:https://bitbucket.org/hzgwpn/libpniio-jni</connection>
-        <developerConnection>scm:hg:ssh://hg@bitbucket.org/hzgwpn/libpniio-jni</developerConnection>
-        <url>ssh://hg@bitbucket.org/hzgwpn/libpniio-jni</url>
+        <connection>scm:git:git@github.com:${github.organization}/${github.repo}.git</connection>
+        <developerConnection>scm:git:git@github.com:${github.organization}/${github.repo}.git</developerConnection>
+        <url>https://github.com/${github.organization}/${github.repo}</url>
         <tag>${version}</tag>
     </scm>
 
