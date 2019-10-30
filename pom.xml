@@ -4,7 +4,7 @@
 
     <groupId>hzg.wpn.nexus</groupId>
     <artifactId>libpniio-jni</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.1</version>
     <packaging>jar</packaging>
 
 
@@ -27,7 +27,7 @@
         <connection>scm:git:git@github.com:${github.organization}/${github.repo}.git</connection>
         <developerConnection>scm:git:git@github.com:${github.organization}/${github.repo}.git</developerConnection>
         <url>https://github.com/${github.organization}/${github.repo}</url>
-        <tag>${version}</tag>
+        <tag>libpniio-jni-3.0.1</tag>
     </scm>
 
     <distributionManagement>
