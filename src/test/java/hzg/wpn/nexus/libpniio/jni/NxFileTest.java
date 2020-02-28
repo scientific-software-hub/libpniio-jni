@@ -78,79 +78,16 @@ public class NxFileTest {
         file.write("/entry/double/time", System.currentTimeMillis(), true);
     }
 
-    //@Test
-    public void testWrite_intArr() throws Exception {
-        byte[] bytes = Files.readAllBytes(Paths.get("url.bmp"));
 
-        int[] data = new int[bytes.length / 3 - 18];
-
-        for (int i = 0, j = 0; i < data.length; ++i) {
-            int rgb;//0
-            rgb = (bytes[j++] & 255) << 16;
-            rgb |= (bytes[j++] & 255) << 8;
-            rgb |= bytes[j++] & 255;
-            data[i] = rgb;
-        }
-
-//        ByteBuffer.wrap(bytes).asIntBuffer().get(data);
-
-//        BufferedImage test_out = new BufferedImage(512,512,BufferedImage.TYPE_INT_RGB);
-//
-//        test_out.setRGB(0,0,512,512,data,0,512);
-//
-//        ImageIO.write(test_out,"bmp", new File("test_out.bmp"));
-
-        file.write("/entry/scan/data/image/value",data);
-    }
 
     @Test
     public void testWriteString() throws Exception {
         file.write("/entry/string/value", "Hello World!!!");
     }
 
-    //@Test
-    public void testWrite_intArr_append() throws Exception {
-        byte[] bytes = Files.readAllBytes(Paths.get("url.bmp"));
-
-        int[] data = new int[bytes.length / 3 - 18];
-
-        for (int i = 0, j = 0; i < data.length; ++i) {
-            int rgb;//0
-            rgb = (bytes[j++] & 255) << 16;
-            rgb |= (bytes[j++] & 255) << 8;
-            rgb |= bytes[j++] & 255;
-            data[i] = rgb;
-        }
-
-//        ByteBuffer.wrap(bytes).asIntBuffer().get(data);
-
-//        BufferedImage test_out = new BufferedImage(512,512,BufferedImage.TYPE_INT_RGB);
-//
-//        test_out.setRGB(0,0,512,512,data,0,512);
-//
-//        ImageIO.write(test_out,"bmp", new File("test_out.bmp"));
-
-        file.write("/entry/scan/data/image/value", data, true);
-    }
-
-    @Test
-    public void testWriteShortArray() throws Exception {
-        file.write("/entry/data/data", new short[]{
-                255, 0, 0, 0, 0, 0, 0, 255,
-                0, 0, 255, 255, 255, 255, 0, 0,
-                0, 0, 255, 255, 255, 255, 0, 0,
-                255, 0, 0, 0, 0, 0, 0, 255
-        }, true);
-    }
-
     @Test(expected = NullPointerException.class)
     public void testWriteString_null() throws Exception {
         file.write("/entry/string/value", (String) null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testWriteArray_null() throws Exception {
-        file.write("/entry/data/data", (short[]) null);
     }
 
     @Test

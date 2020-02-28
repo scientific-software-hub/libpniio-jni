@@ -36,6 +36,17 @@ public class LibpniioJniTest {
     @org.junit.Test
     public void testCreateFile() throws Exception {
         Files.deleteIfExists(Paths.get("target/test.h5"));
-        LibpniioJni.createFile("target/test.h5", "test.nxdl.xml");
+        long filePtr = LibpniioJni.createFile("target/test.h5", "test.nxdl.xml");
+
+        LibpniioJni.write(filePtr, "/entry/string/value", "Hello World!", false);
+        LibpniioJni.write(filePtr, "/entry/string/time", System.currentTimeMillis(), false);
+
+        LibpniioJni.write(filePtr, "/entry/double/value", 3.14D, true);
+        LibpniioJni.write(filePtr, "/entry/double/time", System.currentTimeMillis(), true);
+
+        LibpniioJni.write(filePtr, "/entry/double/value", 2.87D, true);
+        LibpniioJni.write(filePtr, "/entry/double/time", System.currentTimeMillis(), true);
+
+        LibpniioJni.closeFile(filePtr);
     }
 }
