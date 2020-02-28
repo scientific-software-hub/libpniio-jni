@@ -50,6 +50,9 @@ RUN make install
 
 FROM dependencies
 
+RUN apt-get update && apt-get install -y \
+  openjdk-8-jdk-headless                              
+
 ARG APP_UID=2000
 
 ARG APP_GID=2000
