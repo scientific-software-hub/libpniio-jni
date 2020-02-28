@@ -70,6 +70,8 @@ public class LibpniioJni {
 
     public static native void closeFile(long ptr) throws LibpniioException;
 
+    public static native void flush(long ptr) throws LibpniioException;
+
     public static native void write(long ptr, String nx_path, int value, boolean append) throws LibpniioException;
 
     public static native void write(long ptr, String nx_path, long value, boolean append) throws LibpniioException;

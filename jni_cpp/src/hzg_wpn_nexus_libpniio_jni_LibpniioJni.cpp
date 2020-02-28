@@ -52,6 +52,13 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_closeFile(JNIEnv *env, jclass j
     CATCH
 }
 
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_flush(JNIEnv *env, jclass jClass, jlong jLong) {
+    TRY
+        NxFile *nxFile = reinterpret_cast<NxFile *>(jLong);
+        nxFile->file.flush();
+    CATCH
+}
+
 void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2IZ(JNIEnv *env, jclass jClass, jlong jLong,
                                                                                jstring jString, jint jInt, jboolean append) {
     write(env, jClass, jLong, jString, jInt, append);
