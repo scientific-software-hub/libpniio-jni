@@ -27,10 +27,6 @@ public class NxFile implements Closeable {
         return new NxFile(fileName, ptr);
     }
 
-    public void flush() throws LibpniioException {
-        LibpniioJni.flush(ptr);
-    }
-
     public String getFileName() {
         return name;
     }
