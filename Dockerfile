@@ -34,11 +34,11 @@ RUN make install
 
 FROM dependencies AS pniio
 
-RUN git clone https://github.com/pni-libraries/libpniio.git
+RUN git clone -b fix-106 https://github.com/Ingvord/libpniio.git
 
 WORKDIR libpniio
 
-RUN git checkout v1.1.1 && mkdir build
+RUN mkdir build
 
 WORKDIR build
 
