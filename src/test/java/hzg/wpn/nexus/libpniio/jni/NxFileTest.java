@@ -1,9 +1,6 @@
 package hzg.wpn.nexus.libpniio.jni;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -15,6 +12,7 @@ import java.nio.file.Paths;
  * @author ingvord
  * @since 4/1/15
  */
+@Ignore
 public class NxFileTest {
     public static final String TEST_NXDL_XML = "test.nxdl.xml";
     private NxFile file;

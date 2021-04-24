@@ -1,12 +1,14 @@
 package hzg.wpn.nexus.libpniio.jni;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+@Ignore
 public class LibpniioJniTest {
 
     @SuppressWarnings("restriction")
