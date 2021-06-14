@@ -3,6 +3,8 @@ package hzg.wpn.nexus.libpniio.jni;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,13 +33,13 @@ public class LibpniioJni {
             throw new RuntimeException(e);
         }
 
-        System.setProperty("java.library.path", Paths.get(XENV_ROOT, "lib/native/x86_64-linux-gnu").toAbsolutePath().toString());
+        System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + Paths.get(XENV_ROOT, "lib/native/x86_64-linux-gnu").toAbsolutePath().toString());
 
         try {
             hackClassLoader();
 
             System.loadLibrary("pniio_jni");
-        } catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             System.err.println("Failed to hack class loader: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -58,10 +60,10 @@ public class LibpniioJni {
         Files.copy(pniio_jni, Files.createDirectories(cwd.resolve("lib/native/x86_64-linux-gnu")).resolve("libpniio_jni.so"), StandardCopyOption.REPLACE_EXISTING);
     }
 
-    private static void hackClassLoader() throws NoSuchFieldException, IllegalAccessException {
-        Field fieldSysPath = ClassLoader.class.getDeclaredField("sys_paths");
-        fieldSysPath.setAccessible(true);
-        fieldSysPath.set(null, null);
+    private static void hackClassLoader() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        Method initLibPaths = ClassLoader.class.getDeclaredMethod("initLibraryPaths");
+        initLibPaths.setAccessible(true);
+        initLibPaths.invoke(null);
     }
 
     public static native long createFile(String fileName, String nx_template) throws LibpniioException;

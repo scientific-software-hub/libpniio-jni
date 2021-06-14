@@ -1,0 +1,1 @@
+ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[localhost]:2222"

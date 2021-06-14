@@ -1,4 +1,4 @@
-set(JDK_HOME /usr/lib/jvm/java-8-openjdk-amd64)
+set(JDK_HOME /opt/java/openjdk)
 
 if(NOT JDK_HOME)
     message(FATAL_ERROR "Could not find jdk!")
