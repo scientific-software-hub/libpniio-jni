@@ -3,6 +3,7 @@
 //
 #include <h5cpp/hdf5.hpp>
 #include <pni/io/nexus/xml/create.hpp>
+#include <boost/filesystem.hpp>
 
 #include "hzg_wpn_nexus_libpniio_jni_LibpniioJni.h"
 //#include "jni_helpers.hpp"
@@ -15,13 +16,26 @@ using namespace libpniio::jni;
 jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass jClass, jstring jString,
                                                              jstring nxTemplate) {
     TRY
+        using hdf5::node::get_node;
+        using hdf5::node::Type;
         NativeString nativeString(env, jString);
         NativeString nativeString1(env, nxTemplate);
+
+        boost::filesystem::path templatePath{nativeString1.value};
+        if(!boost::filesystem::exists(templatePath)){
+            jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+            env->ThrowNew(libpniioExceptionClass,"template does not exists");
+        }
+
 
         auto file = hdf5::file::create(nativeString.value,hdf5::file::AccessFlags::TRUNCATE);
         auto root_group = file.root();
 
-        pni::io::nexus::xml::create_from_file(root_group, nativeString1.value);
+        pni::io::nexus::xml::create_from_file(root_group, templatePath);
+        if(get_node(root_group,"/entry").type() != Type::GROUP){
+            jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+            env->ThrowNew(libpniioExceptionClass,"structure is not created");
+        }
 
         auto *rv = new NxFile(file);
         return reinterpret_cast<jlong>(rv);

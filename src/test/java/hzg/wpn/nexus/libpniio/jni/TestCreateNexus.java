@@ -18,7 +18,8 @@ public class TestCreateNexus {
 
     @Test
     public void create() throws Exception{
-        NxFile file = NxFile.create("target/test_create.h5", "test.nxdl.xml");
+        System.out.println(String.format("Creating file %s from %s","target/test_create.h5", Paths.get("test.nxdl.xml").toAbsolutePath().toString()));
+        NxFile file = NxFile.create("target/test_create.h5", Paths.get("test.nxdl.xml").toAbsolutePath().toString());
         file.close();
     }
 }
