@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(libpniio_jni)
+project(libpniio-jni)
 
 set(CMAKE_PREFIX_PATH "/usr/local/lib/pkgconfig;${CMAKE_PREFIX_PATH}")
 
