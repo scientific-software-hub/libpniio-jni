@@ -1,6 +1,7 @@
 //
 // Created by ingvord on 3/31/15.
 //
+#include <jni.h>
 #include <h5cpp/hdf5.hpp>
 #include <pni/io/nexus/xml/create.hpp>
 #include <boost/filesystem.hpp>
@@ -10,6 +11,7 @@
 #include "nx_file.hpp"
 #include "native_string.hpp"
 #include "try_catch.hpp"
+#include "write.hpp"
 
 using namespace libpniio::jni;
 
@@ -59,15 +61,7 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_closeFile(JNIEnv *env, jclass j
     CATCH
 }
 
-//auto libpniio::jni::get_object(JNIEnv *env, jlong jLong, jstring jString) -> nxobject_t {
-//NativeString nativeString(env, jString);
-//
-//NxFile *nxFile = reinterpret_cast<NxFile *>(jLong);
-//
-//auto nx_path = nxpath_t::from_string(nativeString.value);
-//
-//return pni::io::nx::get_object(nxFile->file.root(), nx_path);
-//}
+
 //
 //
 
@@ -79,36 +73,51 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_closeFile(JNIEnv *env, jclass j
 //    CATCH
 //}
 //
-//void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2IZ(JNIEnv *env, jclass jClass, jlong jLong,
-//                                                                               jstring jString, jint jInt, jboolean append) {
-//    write(env, jClass, jLong, jString, jInt, append);
-//}
-//
-//void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JZ(JNIEnv *env, jclass jClass, jlong jLong,
-//                                                                              jstring jString, jlong jLong1, jboolean append) {
-//    write(env, jClass, jLong, jString, jLong1, append);
-//}
-//
-//void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2FZ(JNIEnv *env, jclass jClass, jlong jLong,
-//                                                                              jstring jString, jfloat jFloat, jboolean append) {
-//    write(env, jClass, jLong, jString, jFloat, append);
-//}
-//
-//void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2DZ(JNIEnv *env, jclass jClass, jlong jLong,
-//                                                                              jstring jString, jdouble jDouble, jboolean append) {
-//    write(env, jClass, jLong, jString, jDouble, append);
-//}
-//
-//void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljava_lang_String_2Z(JNIEnv *env,
-//                                                                                                 jclass jClass,
-//                                                                                                 jlong jLong,
-//                                                                                                 jstring jString,
-//                                                                                                 jstring jstring2,
-//                                                                                                 jboolean append
-//) {
-//    NativeString nativeString2(env, jstring2);
-//    write(env, jClass, jLong, jString, nativeString2.value, append);
-//}
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2IZ(JNIEnv *env, jclass jClass, jlong jLong,
+                                                                               jstring jString, jint jInt, jboolean jboolean1) {
+    if(jboolean1)
+        append(env, jClass, jLong, jString, jInt);
+    else
+        write(env, jClass, jLong, jString, jInt);
+}
+
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2JZ(JNIEnv *env, jclass jClass, jlong jLong,
+                                                                              jstring jString, jlong jLong1, jboolean jboolean1) {
+    if(jboolean1)
+        append(env, jClass, jLong, jString, jLong1);
+    else
+        write(env, jClass, jLong, jString, jLong1);
+}
+
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2FZ(JNIEnv *env, jclass jClass, jlong jLong,
+                                                                              jstring jString, jfloat jFloat, jboolean jboolean1) {
+    if(jboolean1)
+        append(env, jClass, jLong, jString, jFloat);
+    else
+        write(env, jClass, jLong, jString, jFloat);
+}
+
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2DZ(JNIEnv *env, jclass jClass, jlong jLong,
+                                                                              jstring jString, jdouble jDouble, jboolean jboolean1) {
+    if(jboolean1)
+        append(env, jClass, jLong, jString, jDouble);
+    else
+        write(env, jClass, jLong, jString, jDouble);
+}
+
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljava_lang_String_2Z(JNIEnv *env,
+                                                                                                 jclass jClass,
+                                                                                                 jlong jLong,
+                                                                                                 jstring jString,
+                                                                                                 jstring jstring2,
+                                                                                                 jboolean jboolean1
+) {
+    NativeString nativeString2(env, jstring2);
+    if(jboolean1)
+        append(env, jClass, jLong, jString, nativeString2.value);
+    else
+        write(env, jClass, jLong, jString, nativeString2.value);
+}
 //
 //void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Lsun_nio_ch_DirectBuffer_2I_3SZ(JNIEnv *env, jclass jclass1,
 //                                                                                   jlong jlong1, jstring jstring1,

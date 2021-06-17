@@ -37,7 +37,7 @@ public class NxFileTest {
 
     @Test
     public void testWrite_String() throws Exception {
-        file.write("/entry/string/value", "Hello World!!!");
+        file.write("/entry/string_scalar", "Hello World!!!");
     }
 
     @Test
@@ -52,8 +52,15 @@ public class NxFileTest {
 
     @Test
     public void testWrite_double() throws Exception {
-        file.write("/entry/double/value", Math.random());
-        file.write("/entry/double/time", System.currentTimeMillis());
+        file.write("/entry/double_scalar", Math.random());
+    }
+
+    @Test
+    public void testWrite_double_overwrite() throws Exception {
+        file.write("/entry/double_scalar", 1);
+        file.write("/entry/double_scalar", 2);
+        file.write("/entry/double_scalar", 3);
+        file.write("/entry/double_scalar", 4);
     }
 
     @Test

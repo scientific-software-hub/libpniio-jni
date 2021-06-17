@@ -1,6 +1,12 @@
 FROM adoptopenjdk/openjdk11:jdk-11.0.11_9-debian
 
-RUN DEBIAN_FRONTEND="noninteractive"  apt-get update && apt-get install -y tar git
+RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq install -y gnupg2 software-properties-common curl
+RUN curl http://repos.pni-hdri.de/debian_repo.pub.gpg | apt-key add -
+RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian buster main" -y
+RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq dist-upgrade
+RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq install -y python3-sphinx apt-utils net-tools
+RUN apt-get -qq install -y libpnicore1.1.1-dev libpnicore1.1.1 libpniio1.3.1-dev libpniio1.3.1 libh5cpp0.4.0-dev libh5cpp0.4.0 python3-numpy libhdf5-dev libboost-regex-dev libboost-program-options-dev libboost-system-dev libboost-date-time-dev libboost-filesystem-dev libblas-dev libatlas-base-dev cython3 python3-setuptools libboost-python-dev python3-numpy-abi9 g++ python3-h5py
+RUN apt-get -qq install -y hdf5-plugin-bshuf hdf5-plugin-bz2 hdf5-plugin-lz4
 
 RUN apt-get update \
   && apt-get install -y build-essential \
@@ -12,57 +18,3 @@ RUN apt-get update \
       cmake \
       rsync \
   && apt-get clean
-
-RUN apt-get update \
-  && apt-get install -y doxygen \
-        libboost-program-options-dev \
-        libboost-system-dev \
-        libboost-test-dev \
-        libboost-regex-dev \
-        libboost-filesystem-dev \
-        libboost-date-time-dev \
-        libhdf5-dev \
-        libgtest-dev \
-  && apt-get clean
-
-RUN git clone --depth 1 -b v0.4.0 https://github.com/ess-dmsc/h5cpp.git
-
-WORKDIR h5cpp
-
-RUN mkdir build \
-    && cd build \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DCONAN=DISABLE .. \
-    && make install
-
-WORKDIR /
-
-RUN git clone --depth 1 -b v1.1.1 https://github.com/pni-libraries/libpnicore.git
-
-WORKDIR libpnicore
-
-RUN git clone --depth 1 https://github.com/pni-libraries/cmake.git cmake/common
-
-
-RUN mkdir build \
-    && cd build \
-    && cmake -DCMAKE_BUILD_TYPE=Release .. \
-    && make install
-
-WORKDIR /
-
-RUN git clone --depth 1 -b v1.3.1 https://github.com/pni-libraries/libpniio.git
-
-WORKDIR libpniio
-
-RUN git clone --depth 1 https://github.com/pni-libraries/cmake.git cmake/common
-
-RUN mkdir build \
-    && cd build \
-    && cmake -DCMAKE_BUILD_TYPE=Release .. \
-    && make install
-
-WORKDIR /
-
-ENV LD_LIBRARY_PATH=/usr/local/lib
-
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig

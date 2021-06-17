@@ -30,21 +30,7 @@ namespace jni {
 
     auto get_object(JNIEnv * env, jlong jLong, jstring jString) -> nxobject_t;
 
-    template<typename T>
-    void write(JNIEnv * env, jclass, jlong jLong, jstring jString, T value, bool append) {
-        using namespace pni::core;
-        using namespace pni::io::nx;
 
-        TRY
-            nxfield_t fld = get_object(env, jLong, jString);
-
-            if(append) grow(fld,0);
-
-            size_t ndx = fld.size();
-
-            fld(ndx - 1).write(value);
-        CATCH
-    }
 
     template <typename T>
     inline void write_image(JNIEnv * env, jclass clazz, jlong jLong, jstring jString, T* value, size_t size,bool append){
