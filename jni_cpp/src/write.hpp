@@ -1,11 +1,13 @@
 //
 // Created by ingvord on 17.06.2021.
 //
+#include <string>
 #include <pni/io/nexus.hpp>
 #include <h5cpp/hdf5.hpp>
 
 #include "native_string.hpp"
 #include "nx_file.hpp"
+#include "try_catch.hpp"
 
 #ifndef LIBPNIIO_JNI_WRITE_H
 #define LIBPNIIO_JNI_WRITE_H

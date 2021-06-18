@@ -86,13 +86,19 @@ public class NxFileTest {
 
 
     @Test
-    public void testWriteString() throws Exception {
-        file.write("/entry/string/value", "Hello World!!!");
+    @Ignore
+    public void testAppend_String() throws Exception {
+        file.write("/entry/string/value", "Hello World!!!", true);
     }
 
     @Test(expected = NullPointerException.class)
     public void testWriteString_null() throws Exception {
         file.write("/entry/string/value", (String) null);
+    }
+
+    @Test(expected = LibpniioException.class)
+    public void test_getNonDataset() throws Exception {
+        file.write("/entry/string", "Whatever");
     }
 
     @Test

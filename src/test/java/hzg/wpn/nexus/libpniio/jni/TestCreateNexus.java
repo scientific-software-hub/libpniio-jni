@@ -22,4 +22,10 @@ public class TestCreateNexus {
         NxFile file = NxFile.create("target/test_create.h5", Paths.get("test.nxdl.xml").toAbsolutePath().toString());
         file.close();
     }
+
+    @Test
+    public void createDuplicate() throws Exception{
+        NxFile file = NxFile.create("target/test_create.h5", Paths.get("test.duplicate.xml").toAbsolutePath().toString());
+        file.close();
+    }
 }
