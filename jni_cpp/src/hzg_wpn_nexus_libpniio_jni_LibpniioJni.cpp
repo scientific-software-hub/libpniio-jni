@@ -43,8 +43,11 @@ jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass
         auto *rv = new NxFile(file);
         return reinterpret_cast<jlong>(rv);
     } catch (const std::runtime_error& ex){
-        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException"); \
-        env->ThrowNew(libpniioExceptionClass,ex.what()); \
+        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+        env->ThrowNew(libpniioExceptionClass,ex.what());
+    } catch (...) {
+        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+        env->ThrowNew(libpniioExceptionClass,"Unexpected runtime error in libpniio...";
     }
 }
 
