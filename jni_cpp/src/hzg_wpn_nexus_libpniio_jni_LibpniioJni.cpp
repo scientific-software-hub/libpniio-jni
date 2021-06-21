@@ -47,7 +47,7 @@ jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass
         env->ThrowNew(libpniioExceptionClass,ex.what());
     } catch (...) {
         jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
-        env->ThrowNew(libpniioExceptionClass,"Unexpected runtime error in libpniio...";
+        env->ThrowNew(libpniioExceptionClass,"Unexpected runtime error in libpniio...");
     }
 }
 
