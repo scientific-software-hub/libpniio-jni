@@ -7,7 +7,6 @@
 
 #include "native_string.hpp"
 #include "nx_file.hpp"
-#include "try_catch.hpp"
 
 #ifndef LIBPNIIO_JNI_WRITE_H
 #define LIBPNIIO_JNI_WRITE_H
@@ -44,7 +43,7 @@ auto get_object(JNIEnv *env, jlong jLong, jstring jString) -> hdf5::node::Datase
 
 template<typename T>
 void write(JNIEnv * env, jclass, jlong jLong, jstring jString, T value) {
-    TRY
+    try {
     auto dataset = get_object(env, jLong, jString);
 
 
@@ -58,12 +57,15 @@ void write(JNIEnv * env, jclass, jlong jLong, jstring jString, T value) {
     }
 
     dataset.write(value);
-    CATCH
+    } catch (const std::runtime_error& ex){
+        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+        env->ThrowNew(libpniioExceptionClass,ex.what());
+    }
 }
 
         template<typename T>
         void append(JNIEnv * env, jclass, jlong jLong, jstring jString, T value) {
-            TRY
+            try {
                 auto dataset = get_object(env, jLong, jString);
 
 
@@ -75,7 +77,10 @@ void write(JNIEnv * env, jclass, jlong jLong, jstring jString, T value) {
                 hdf5::dataspace::Hyperslab selection{{0},{1},{1},{1}};
                 selection.offset(0,size - 1);
                 dataset.write(value, selection);
-            CATCH
+            } catch (const std::runtime_error& ex){
+                jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+                env->ThrowNew(libpniioExceptionClass,ex.what());
+            }
         }
 
     }//namespace

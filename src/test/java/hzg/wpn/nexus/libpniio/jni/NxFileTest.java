@@ -86,7 +86,6 @@ public class NxFileTest {
 
 
     @Test
-    @Ignore
     public void testAppend_String() throws Exception {
         file.write("/entry/string/value", "Hello World!!!", true);
     }

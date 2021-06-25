@@ -3,9 +3,7 @@
     <field type="float64" name="double_scalar"/>
     <group type="NXlog" name="string">
         <field type="string" name="value">
-            <dimensions rank="1">
-                <dim value="2" index="0"/>
-            </dimensions>
+            <dimensions rank="1"/>
         </field>
         <field type="uint64" name="time"/>
     </group>

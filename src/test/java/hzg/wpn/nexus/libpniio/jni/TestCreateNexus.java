@@ -23,9 +23,15 @@ public class TestCreateNexus {
         file.close();
     }
 
-    @Test
+    @Test(expected = LibpniioException.class)
     public void createDuplicate() throws Exception{
         NxFile file = NxFile.create("target/test_create.h5", Paths.get("test.duplicate.xml").toAbsolutePath().toString());
+        file.close();
+    }
+
+    @Test(expected = LibpniioException.class)
+    public void createNonExistingTemplate() throws Exception{
+        NxFile file = NxFile.create("target/test_create.h5", Paths.get("test.doesnotexists.xml").toAbsolutePath().toString());
         file.close();
     }
 }

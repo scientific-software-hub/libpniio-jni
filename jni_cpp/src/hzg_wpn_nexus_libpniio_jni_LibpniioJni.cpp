@@ -11,7 +11,6 @@
 //#include "jni_helpers.hpp"
 #include "nx_file.hpp"
 #include "native_string.hpp"
-#include "try_catch.hpp"
 #include "write.hpp"
 
 using namespace libpniio::jni;
@@ -28,6 +27,7 @@ jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass
         if (!boost::filesystem::exists(templatePath)) {
             jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
             env->ThrowNew(libpniioExceptionClass, "template does not exists");
+            return -1;
         }
 
 
@@ -38,6 +38,7 @@ jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass
         if (get_node(root_group, "/entry").type() != Type::GROUP) {
             jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
             env->ThrowNew(libpniioExceptionClass, "structure is not created");
+            return -1;
         }
 
         auto *rv = new NxFile(file);
@@ -45,27 +46,36 @@ jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass
     } catch (const std::runtime_error& ex){
         jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
         env->ThrowNew(libpniioExceptionClass,ex.what());
+        return -1;
     } catch (...) {
         jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
         env->ThrowNew(libpniioExceptionClass,"Unexpected runtime error in libpniio...");
+        return -1;
     }
 }
 
 jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_openFile(JNIEnv *env, jclass jClass, jstring jString) {
-    TRY
+    try {
         NativeString nativeString(env, jString);
         auto file = hdf5::file::open(nativeString.value, false);
         auto *rv = new NxFile(file);
         return reinterpret_cast<jlong>(rv);
-    CATCH
+    } catch (const std::runtime_error& ex){
+        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+        env->ThrowNew(libpniioExceptionClass,ex.what());
+        return -1;
+    }
 }
 
 void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_closeFile(JNIEnv *env, jclass jClass, jlong jLong) {
-    TRY
+    try {
         NxFile *nxFile = reinterpret_cast<NxFile *>(jLong);
         nxFile->file.close();
         delete nxFile;
-    CATCH
+    } catch (const std::runtime_error& ex){
+        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+        env->ThrowNew(libpniioExceptionClass,ex.what());
+    }
 }
 
 
@@ -120,10 +130,11 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Ljav
                                                                                                  jboolean jboolean1
 ) {
     NativeString nativeString2(env, jstring2);
+    std::string value{nativeString2.value};
     if(jboolean1)
-        append(env, jClass, jLong, jString, nativeString2.value);
+        append(env, jClass, jLong, jString, value);
     else
-        write(env, jClass, jLong, jString, nativeString2.value);
+        write(env, jClass, jLong, jString, value);
 }
 //
 //void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2Lsun_nio_ch_DirectBuffer_2I_3SZ(JNIEnv *env, jclass jclass1,
