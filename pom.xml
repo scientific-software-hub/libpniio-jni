@@ -4,7 +4,7 @@
 
     <groupId>de.hereon.xenv.pniio</groupId>
     <artifactId>libpniio-jni</artifactId>
-    <version>4.2</version>
+    <version>4.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
 
@@ -27,7 +27,7 @@
         <connection>scm:git:git@github.com:${github.organization}/${github.repo}.git</connection>
         <developerConnection>scm:git:git@github.com:${github.organization}/${github.repo}.git</developerConnection>
         <url>https://github.com/${github.organization}/${github.repo}</url>
-        <tag>libpniio-jni-4.2</tag>
+        <tag>${version}</tag>
     </scm>
 
     <distributionManagement>
