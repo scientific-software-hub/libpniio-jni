@@ -83,13 +83,16 @@ void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_closeFile(JNIEnv *env, jclass j
 //
 
 //
-//void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_flush(JNIEnv *env, jclass jClass, jlong jLong) {
-//    TRY
-//        NxFile *nxFile = reinterpret_cast<NxFile *>(jLong);
-//        nxFile->file.flush();
-//    CATCH
-//}
-//
+void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_flush(JNIEnv *env, jclass jClass, jlong jLong) {
+    try {
+        NxFile *nxFile = reinterpret_cast<NxFile *>(jLong);
+        nxFile->file.flush(hdf5::file::Scope::GLOBAL);
+    } catch (const std::runtime_error& ex){
+        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
+        env->ThrowNew(libpniioExceptionClass,ex.what());
+    }
+}
+
 void Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_write__JLjava_lang_String_2IZ(JNIEnv *env, jclass jClass, jlong jLong,
                                                                                jstring jString, jint jInt, jboolean jboolean1) {
     if(jboolean1)

@@ -104,4 +104,14 @@ public class NxFileTest {
     public void testWriteDouble_null() throws Exception {
         file.write("/entry/double/value", Double.NaN);
     }
+
+    @Test
+    @Ignore
+    public void testPerformance() throws Exception{
+        for(int i = 0; i < 1_000; i++) {
+            file.write("/entry/double/value", Math.random(), true);
+            file.write("/entry/double/time", System.currentTimeMillis(), true);
+            file.flush();
+        }
+    }
 }
