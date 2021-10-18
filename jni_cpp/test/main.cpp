@@ -1,32 +1,48 @@
 #include <iostream>
+#include <chrono>
 #include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml.hpp>
 #include <pni/io/nx/algorithms/get_object.hpp>
-
-#define cimg_display 0
-
-#include "../CImg-1.6.4_pre060415/CImg.h"
-
 
 
 using namespace std;
 using namespace pni::io::nx;
-using namespace pni::io::nx::h5;
 
 int main(int argc,char **argv) {
-    h5::nxfile f = h5::nxfile::open_file("/home/khokhria/Projects/jDFS/var/test.nx");
+    auto file = h5::nxfile::create_file("/tmp/tmp.lZE7OB24XR/test.nx");
+    auto xml = xml::create_from_file("/tmp/tmp.lZE7OB24XR/test/test.nxdl.xml");
 
-    h5::nxfield o = get_object(f.root(), nxpath::from_string("/entry/data/data"));
+    auto root_group = file.root();
 
-    std::cout << "field.name = " << o.name() << std::endl;
-    std::cout << "field.size = " << o.size() << std::endl;
+    xml::xml_to_nexus(xml.get_child("definition"), root_group);
 
-    cimg_library::CImg<int16_t> img(512,512);
+    auto start = chrono::system_clock::now();
 
-    o(0,pni::core::slice(0,512),pni::core::slice(0,512)).read(262144,img.data());
+    h5::nxfield value_fld = get_object(root_group, nxpath::from_string("/entry/long/value"));;
 
-    img.save_jpeg("test.out.jpeg");
+    for(size_t i=0;i<1000000;i++)
+    {
+        value_fld.grow(0);
+        size_t ndx = value_fld.size();
 
-    f.close();
+        value_fld(ndx - 1).write(rand());
+    }
+
+    h5::nxfield time_fld = get_object(root_group, nxpath::from_string("/entry/long/time"));;
+
+    for(size_t i=0;i<1000000;i++)
+    {
+        time_fld.grow(0);
+        size_t ndx = time_fld.size();
+
+        time_fld(ndx - 1).write(chrono::system_clock::now().time_since_epoch().count());
+    }
+
+    auto end = chrono::system_clock::now();
+
+    cout << "Time elapsed (ms): " << chrono::duration_cast<chrono::milliseconds>(end-start).count();
+
+    file.close();
 
     return 0;
 }
