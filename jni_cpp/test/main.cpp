@@ -40,14 +40,11 @@ int main(int argc,char **argv) {
     pni::io::nexus::xml::create_from_file(root_group, "/tmp/tmp.pkeofpWFJ6/test/test.nxdl.xml");
 
     auto start = chrono::system_clock::now();
+
+    auto dataset = get_dataset("/entry/long/value", file);
     for(size_t i = 0; i < 1000  ; i++) {
-        auto dataset = get_dataset("/entry/long/value", file);
+
         append(std::rand(), dataset);
-
-        dataset = get_dataset("/entry/long/time", file);
-        append(chrono::system_clock::now().time_since_epoch().count(), dataset);
-
-        file.flush(hdf5::file::Scope::GLOBAL);
 
     }
     auto end = chrono::system_clock::now();
