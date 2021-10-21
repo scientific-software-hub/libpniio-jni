@@ -41,16 +41,26 @@ int main(int argc,char **argv) {
 
     auto start = chrono::system_clock::now();
 
+
     auto dataset = get_dataset("/entry/long/value", file);
-    for(size_t i = 0; i < 1000  ; i++) {
 
-        append(std::rand(), dataset);
+    hdf5::dataspace::Hyperslab selection{{0},{1},{1},{1}};
 
+    auto dtype = hdf5::datatype::create<long int>();
+    hdf5::property::DatasetTransferList dtpl;
+    hdf5::dataspace::Simple simple_space({1}, {hdf5::dataspace::Simple::UNLIMITED});
+    for(size_t i = 0; i < 1000000  ; i++) {
+        dataset.extent(0, 1);
+        auto file_space = dataset.dataspace();
+        selection.offset(0, i);
+        file_space.selection(hdf5::dataspace::SelectionOperation::SET,selection);
+        dataset.write(std::rand(), dtype, simple_space, file_space, dtpl);
     }
     auto end = chrono::system_clock::now();
 
     cout << "Time elapsed (ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << endl;
 
+    file.flush(hdf5::file::Scope::GLOBAL);
     file.close();
 
     return 0;
