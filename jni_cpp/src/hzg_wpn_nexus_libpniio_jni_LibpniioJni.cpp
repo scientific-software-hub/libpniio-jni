@@ -57,7 +57,7 @@ jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_createFile(JNIEnv *env, jclass
 jlong Java_hzg_wpn_nexus_libpniio_jni_LibpniioJni_openFile(JNIEnv *env, jclass jClass, jstring jString) {
     try {
         NativeString nativeString(env, jString);
-        auto file = hdf5::file::open(nativeString.value, false);
+        auto file = hdf5::file::open(nativeString.value, hdf5::file::AccessFlags::READWRITE);
         auto *rv = new NxFile(file);
         return reinterpret_cast<jlong>(rv);
     } catch (const std::runtime_error& ex){
