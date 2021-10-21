@@ -19,7 +19,7 @@
     </developers>
 
     <properties>
-        <github.organization>hzg-wpi</github.organization>
+        <github.organization>hereon-wpi</github.organization>
         <github.repo>libpniio-jni</github.repo>
     </properties>
 
