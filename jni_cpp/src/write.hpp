@@ -20,24 +20,7 @@ auto get_object(JNIEnv *env, jlong jLong, jstring jString) -> hdf5::node::Datase
 
     NxFile *nxFile = reinterpret_cast<NxFile *>(jLong);
 
-    auto nx_path = nexus::Path::from_string(nativeString.value);
-    std::string nx_path_string = nexus::Path::to_string(nx_path);
-
-    nexus::PathObjectList objects = nexus::get_objects(nxFile->file.root(), nx_path);
-    if(objects.size() > 1) {
-        std::string message{"ambiguous nxPath: "};
-        message += nx_path_string;
-        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
-        env->ThrowNew(libpniioExceptionClass, message.c_str());
-    }
-    auto result = objects.front();
-    if(result.type() != nexus::PathObject::Type::DATASET) {
-        std::string message{"nxPath object is not a dataset "};
-        message += nx_path_string;
-        jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
-        env->ThrowNew(libpniioExceptionClass, message.c_str());
-    }
-
+    auto result = nxFile->get_dataset({nativeString.value});
     return result;
 }
 
