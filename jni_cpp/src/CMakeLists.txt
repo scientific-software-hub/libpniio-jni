@@ -1,4 +1,4 @@
-set(SOURCE_FILES hzg_wpn_nexus_libpniio_jni_LibpniioJni.cpp)
+set(SOURCE_FILES hzg_wpn_nexus_libpniio_jni_LibpniioJni.cpp nx_file.cpp)
 set(HEADER_FILES
         native_string.hpp
         nx_file.hpp
