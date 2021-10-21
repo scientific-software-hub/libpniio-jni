@@ -52,14 +52,21 @@ void write(JNIEnv * env, jclass, jlong jLong, jstring jString, T value) {
                 auto dataset = get_object(env, jLong, jString);
 
 
+                hdf5::dataspace::Hyperslab selection{{0},{1},{1},{1}};
+
+                auto dtype = hdf5::datatype::create<T>();
+                hdf5::property::DatasetTransferList dtpl;
+                hdf5::dataspace::Simple simple_space({1}, {hdf5::dataspace::Simple::UNLIMITED});
+
 
                 dataset.extent(0,1);
                 auto size = dataset.dataspace().size();
 
 
-                hdf5::dataspace::Hyperslab selection{{0},{1},{1},{1}};
-                selection.offset(0,size - 1);
-                dataset.write(value, selection);
+                auto file_space = dataset.dataspace();
+                selection.offset(0, size-1);
+                file_space.selection(hdf5::dataspace::SelectionOperation::SET,selection);
+                dataset.write(value, dtype, simple_space, file_space, dtpl);
             } catch (const std::runtime_error& ex){
                 jclass libpniioExceptionClass = env->FindClass("hzg/wpn/nexus/libpniio/jni/LibpniioException");
                 env->ThrowNew(libpniioExceptionClass,ex.what());

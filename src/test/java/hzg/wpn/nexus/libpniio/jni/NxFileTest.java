@@ -110,8 +110,8 @@ public class NxFileTest {
     @Ignore
     public void testPerformance() throws Exception{
         long start = System.nanoTime();
-        for(int i = 0; i < 1_000_000; i++) {
-            file.write("/entry/double/value", Math.random(), true);
+        for(int i = 0; i < 1_000; i++) {
+            file.write("/entry/double/value", Math.random(), false);
             file.flush();
         }
         long end = System.nanoTime();

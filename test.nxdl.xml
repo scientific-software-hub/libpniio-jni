@@ -8,7 +8,11 @@
         <field type="uint64" name="time"/>
     </group>
     <group type="NXlog" name="double">
-        <field type="float64" name="value"/>
+        <field type="float64" name="value">
+            <chunk rank="1">
+                <dim value="1024" index="0"/>
+            </chunk>
+        </field>
         <field type="uint64" name="time"/>
     </group>
     <group type="NXlog" name="float">
