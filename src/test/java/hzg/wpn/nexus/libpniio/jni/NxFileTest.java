@@ -27,8 +27,9 @@ public class NxFileTest {
 
     @Before
     public void before() throws Exception{
-        Files.deleteIfExists(Paths.get("target/" + testName + ".h5"));
-        file = NxFile.create("target/" + testName + ".h5", TEST_NXDL_XML);
+//        Files.deleteIfExists(Paths.get("target/" + testName + ".h5"));
+//        file = NxFile.create("target/" + testName + ".h5", TEST_NXDL_XML);
+        file = NxFile.open("target/" + testName + ".h5");
     }
 
     @After
@@ -111,7 +112,7 @@ public class NxFileTest {
     public void testPerformance() throws Exception{
         long start = System.nanoTime();
         for(int i = 0; i < 1_000; i++) {
-            file.write("/entry/double/value", Math.random(), false);
+            file.write("/entry/double/value", Math.random(), true);
             file.flush();
         }
         long end = System.nanoTime();
