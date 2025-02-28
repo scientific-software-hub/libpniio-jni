@@ -19,7 +19,7 @@
     </developers>
 
     <properties>
-        <github.organization>hereon-wpi</github.organization>
+        <github.organization>scientific-software-hub</github.organization>
         <github.repo>libpniio-jni</github.repo>
     </properties>
 
@@ -32,7 +32,7 @@
 
     <distributionManagement>
         <repository>
-            <id>github-hzg</id>
+            <id>github-upstream</id>
             <url>https://maven.pkg.github.com/${github.organization}/${github.repo}</url>
         </repository>
     </distributionManagement>
